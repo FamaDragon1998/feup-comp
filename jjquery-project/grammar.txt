@@ -1,0 +1,16 @@
+start -> Expr
+expr -> BEGIN + Fact + END
+fact -> COLLECTION + Term + RES
+term -> OPEN + ATTR + OP + Value + CLOSE
+value -> TAG + VAL + TAG
+
+BEGIN -> \$\(\"
+END -> \"\)\;
+COLLECTION -> [0-9a-z][0-9A-Za-z]*
+RES -> [0-9a-z][0-9A-Za-z]*
+OPEN -> \[
+CLOSE -> \]
+ATTR -> [0-9a-z][0-9A-Za-z]*
+OP -> \*\=
+TAG -> \'
+VAL -> [0-9a-z][0-9A-Za-z]*
