@@ -4,3 +4,9 @@
 /HelloLexer.tokens
 /HelloListener.java
 /HelloParser.java
+/JjQuery.tokens
+/JjQueryBaseListener.java
+/JjQueryLexer.java
+/JjQueryLexer.tokens
+/JjQueryListener.java
+/JjQueryParser.java
