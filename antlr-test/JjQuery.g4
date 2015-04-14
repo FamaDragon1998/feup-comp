@@ -1,13 +1,8 @@
 grammar JjQuery;
 
-r
-:
-	WORD '/*@jQ' jquery '*/' WORD
-;
-
 WS
 :
-	[ \t\r\n]+ -> skip
+	[ \t\r\n]+ -> channel ( HIDDEN )
 ; // skip spaces, tabs, newlines
 
 WORD
@@ -15,11 +10,54 @@ WORD
 	[A-Za-z_] [A-Za-z0-9_]*
 ;
 
-//TEST : [\s\S]*(?=\/\*@jQ) ;
-
-jquery
+SINGLE_LINE_COMMENT
 :
-	in out define
+	'//' ~[\r\n]* '\r'? '\n' -> skip
+;
+
+MULTI_LINE_COMMENT
+:
+	(
+		'/**/'
+		| '/*' ~['@jQ'] .*? '*/'
+	) -> skip
+;
+
+JQUERYBLOCKSTART
+:
+	'/*@jQ'
+;
+
+JQUERYBLOCKEND
+:
+	'*/'
+;
+
+main
+:
+	WORD jQueryBlock* WORD
+;
+
+/*
+TE
+:
+	~[JQUERYBLOCKSTART]*
+;
+
+test
+:
+	TE jQuery JQUERYBLOCKEND
+; */
+jQueryBlock
+:
+	JQUERYBLOCKSTART jQuery* JQUERYBLOCKEND
+;
+
+jQuery
+:
+	in
+	| out
+	| define
 ;
 
 in
