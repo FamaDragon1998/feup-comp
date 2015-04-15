@@ -2,17 +2,42 @@ grammar JjQuery;
 
 WS
 :
-	[ \t\r\n]+ -> channel ( HIDDEN )
+	[ \t\r\n]+ -> skip
 ; // skip spaces, tabs, newlines
 
-WORD
+INT
 :
-	[A-Za-z_] [A-Za-z0-9_]*
+	[0-9]+
+;
+
+NEWLINE
+:
+	'\r'? '\n'
+;
+
+OPEN
+:
+	'('
+;
+
+CLOSE
+:
+	')'
+;
+
+OP
+:
+	'*='
+;
+
+ID
+:
+	[a-zA-Z] [a-zA-Z0-9]*
 ;
 
 SINGLE_LINE_COMMENT
 :
-	'//' ~[\r\n]* '\r'? '\n' -> skip
+	'//' ~[\r\n]* -> skip
 ;
 
 MULTI_LINE_COMMENT
@@ -33,24 +58,20 @@ JQUERYBLOCKEND
 	'*/'
 ;
 
+/*
 main
 :
-	WORD jQueryBlock* WORD
+	JAVA JQUERYBLOCKSTART jQueryBlock
 ;
 
-/*
-TE
+JAVA
 :
-	~[JQUERYBLOCKSTART]*
+	.*
 ;
-
-test
-:
-	TE jQuery JQUERYBLOCKEND
-; */
+*/
 jQueryBlock
 :
-	JQUERYBLOCKSTART jQuery* JQUERYBLOCKEND
+	jQuery* JQUERYBLOCKEND
 ;
 
 jQuery
@@ -62,15 +83,15 @@ jQuery
 
 in
 :
-	'in' WORD ';'
+	'in' ID ';'
 ;
 
 out
 :
-	'out' WORD ';'
+	'out' ID ';'
 ;
 
 define
 :
-	WORD '=' '$' '(' '\"' WORD '[' WORD '*=' '\'' WORD '\'' ']' WORD '\"' ')' ';'
+	ID '=' '$' OPEN '\"' ID '[' ID OP '\'' ID '\'' ']' ID '\"' CLOSE ';'
 ;
