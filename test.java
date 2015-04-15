@@ -1,4 +1,4 @@
-asdasd
+a
 
 /*@jQ
 	
@@ -12,4 +12,4 @@ asdasd
 	selected = $("library[title*='compiler'] isbn");
 */
 
-asdd
+a

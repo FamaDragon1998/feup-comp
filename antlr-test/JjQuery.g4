@@ -1,84 +1,40 @@
 grammar JjQuery;
 
-WS
-:
-	[ \t\r\n]+ -> skip
-; // skip spaces, tabs, newlines
-
-INT
-:
-	[0-9]+
-;
-
-NEWLINE
-:
-	'\r'? '\n'
-;
-
-OPEN
-:
-	'('
-;
-
-CLOSE
-:
-	')'
-;
-
-OP
-:
-	'*='
-;
-
-ID
-:
-	[a-zA-Z] [a-zA-Z0-9]*
-;
-
-SINGLE_LINE_COMMENT
-:
-	'//' ~[\r\n]* -> skip
-;
-
-MULTI_LINE_COMMENT
-:
-	(
-		'/**/'
-		| '/*' ~['@jQ'] .*? '*/'
-	) -> skip
-;
-
-JQUERYBLOCKSTART
-:
-	'/*@jQ'
-;
-
-JQUERYBLOCKEND
-:
-	'*/'
-;
-
-/*
-main
-:
-	JAVA JQUERYBLOCKSTART jQueryBlock
-;
+import Tokens;
 
 JAVA
 :
-	.*
+	'a' NEWLINE*
 ;
-*/
+
+main
+:
+	JAVA
+	(
+		(
+			JQUERYBLOCKSTART jQueryBlock
+		)* JAVA
+	)?
+	| JAVA
+	(
+		(
+			JQUERYBLOCKSTART jQueryBlock JAVA
+		)*
+	)?
+;
+
 jQueryBlock
 :
-	jQuery* JQUERYBLOCKEND
+	(
+		jQuery SINGLE_LINE_COMMENT? NEWLINE*
+	)* JQUERYBLOCKEND NEWLINE*
 ;
 
 jQuery
 :
 	in
 	| out
-	| define
+	| assign
 ;
 
 in
@@ -91,7 +47,13 @@ out
 	'out' ID ';'
 ;
 
-define
+assign
 :
-	ID '=' '$' OPEN '\"' ID '[' ID OP '\'' ID '\'' ']' ID '\"' CLOSE ';'
+	ID ASSIGN DOLLAR OPEN_PARENTHESES QUOTES ID selector ID QUOTES
+	CLOSE_PARENTHESES SEMICOLON
+;
+
+selector
+:
+	OPEN_BRACKET ID OP APOSTROPHE ID APOSTROPHE CLOSE_BRACKET
 ;

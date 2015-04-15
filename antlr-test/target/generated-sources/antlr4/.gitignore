@@ -10,3 +10,5 @@
 /JjQueryLexer.tokens
 /JjQueryListener.java
 /JjQueryParser.java
+/Tokens.java
+/Tokens.tokens
