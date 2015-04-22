@@ -2,31 +2,28 @@ grammar JjQuery;
 
 import Tokens;
 
-JAVA
-:
-	'a' NEWLINE*
-;
-
 main
 :
-	JAVA
+	block*
+;
+
+
+block
+:
 	(
-		(
-			JQUERYBLOCKSTART jQueryBlock
-		)* JAVA
-	)?
-	| JAVA
-	(
-		(
-			JQUERYBLOCKSTART jQueryBlock JAVA
-		)*
-	)?
+		java | jQueryBlock
+	)
+;
+
+java
+:
+	'a' NEWLINE*
 ;
 
 jQueryBlock
 :
 	(
-		jQuery SINGLE_LINE_COMMENT? NEWLINE*
+		JQUERYBLOCKSTART NEWLINE* jQuery SINGLE_LINE_COMMENT? NEWLINE*
 	)* JQUERYBLOCKEND NEWLINE*
 ;
 
