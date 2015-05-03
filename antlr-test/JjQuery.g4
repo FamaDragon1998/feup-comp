@@ -4,27 +4,23 @@ import Tokens;
 
 main
 :
-	block*
-;
-
-
-block
-:
+	java
 	(
-		java | jQueryBlock
-	)
+		jQueryBlock+ java
+	)*
 ;
 
 java
 :
-	'a' NEWLINE*
+	.*?
 ;
 
 jQueryBlock
 :
+	JQUERYBLOCKSTART
 	(
-		JQUERYBLOCKSTART NEWLINE* jQuery SINGLE_LINE_COMMENT? NEWLINE*
-	)* JQUERYBLOCKEND NEWLINE*
+		jQuery SINGLE_LINE_COMMENT?
+	)* JQUERYBLOCKEND
 ;
 
 jQuery
@@ -36,12 +32,12 @@ jQuery
 
 in
 :
-	'in' ID ';'
+	'in' ID SEMICOLON
 ;
 
 out
 :
-	'out' ID ';'
+	'out' ID SEMICOLON
 ;
 
 assign
