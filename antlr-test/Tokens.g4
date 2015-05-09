@@ -16,10 +16,7 @@ OP
 	| '|='
 	| '~='
 	| '$='
-
-	// TODO
-	// | '='
-
+	| '='
 	| '!='
 	| '^='
 ;
@@ -34,22 +31,17 @@ JQUERYBLOCKEND
 	NEWLINE? '*/'
 ;
 
-ASSIGN
-:
-	'='
-;
-
 DOLLAR
 :
 	'$'
 ;
 
-OPEN_PARENTHESES
+OPEN_PARENTHESIS
 :
 	'('
 ;
 
-CLOSE_PARENTHESES
+CLOSE_PARENTHESIS
 :
 	')'
 ;

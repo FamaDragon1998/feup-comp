@@ -15,15 +15,31 @@ java
 	.*?
 ;
 
+/*
+java
+:
+	row*?
+;
+
+row
+:
+	TEXT NEWLINE?
+;
+
+TEXT
+:
+	~[\n\r]+
+;
+*/
 jQueryBlock
 :
 	JQUERYBLOCKSTART
 	(
-		jQuery SINGLE_LINE_COMMENT?
+		jQueryStatement SINGLE_LINE_COMMENT?
 	)* JQUERYBLOCKEND
 ;
 
-jQuery
+jQueryStatement
 :
 	in
 	| out
@@ -42,8 +58,8 @@ out
 
 assign
 :
-	ID ASSIGN DOLLAR OPEN_PARENTHESES QUOTES ID selector ID QUOTES
-	CLOSE_PARENTHESES SEMICOLON
+	ID '=' DOLLAR OPEN_PARENTHESIS QUOTES ID selector ID QUOTES CLOSE_PARENTHESIS
+	SEMICOLON
 ;
 
 selector
