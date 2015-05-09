@@ -27,10 +27,10 @@ public class JjQueryParser extends Parser {
 			"WHITESPACE_CHANNEL", "COMMENTS_CHANNEL", "JAVA", "'/*@jQ'",
 			"'*/'", "'in'", "'out'", "ID", "'\"'", "'''", "';'", "'='", "'$'",
 			"OP", "'('", "')'", "'['", "']'", "WS", "SINGLE_LINE_COMMENT" };
-	public static final int RULE_src = 0, RULE_jQuery = 1, RULE_in = 2,
-			RULE_out = 3, RULE_assign = 4, RULE_selector = 5;
-	public static final String[] ruleNames = { "src", "jQuery", "in", "out",
-			"assign", "selector" };
+	public static final int RULE_init = 0, RULE_java = 1, RULE_jQuery = 2,
+			RULE_in = 3, RULE_out = 4, RULE_assign = 5, RULE_selector = 6;
+	public static final String[] ruleNames = { "init", "java", "jQuery", "in",
+			"out", "assign", "selector" };
 
 	@Override
 	public String getGrammarFileName() {
@@ -63,7 +63,7 @@ public class JjQueryParser extends Parser {
 				_sharedContextCache);
 	}
 
-	public static class SrcContext extends ParserRuleContext {
+	public static class InitContext extends ParserRuleContext {
 		public TerminalNode EOF() {
 			return getToken(JjQueryParser.EOF, 0);
 		}
@@ -72,61 +72,61 @@ public class JjQueryParser extends Parser {
 			return getRuleContext(JQueryContext.class, i);
 		}
 
-		public List<TerminalNode> JAVA() {
-			return getTokens(JjQueryParser.JAVA);
+		public List<JavaContext> java() {
+			return getRuleContexts(JavaContext.class);
+		}
+
+		public JavaContext java(int i) {
+			return getRuleContext(JavaContext.class, i);
 		}
 
 		public List<JQueryContext> jQuery() {
 			return getRuleContexts(JQueryContext.class);
 		}
 
-		public TerminalNode JAVA(int i) {
-			return getToken(JjQueryParser.JAVA, i);
-		}
-
-		public SrcContext(ParserRuleContext parent, int invokingState) {
+		public InitContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 
 		@Override
 		public int getRuleIndex() {
-			return RULE_src;
+			return RULE_init;
 		}
 
 		@Override
 		public void enterRule(ParseTreeListener listener) {
 			if (listener instanceof JjQueryParserListener)
-				((JjQueryParserListener) listener).enterSrc(this);
+				((JjQueryParserListener) listener).enterInit(this);
 		}
 
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if (listener instanceof JjQueryParserListener)
-				((JjQueryParserListener) listener).exitSrc(this);
+				((JjQueryParserListener) listener).exitInit(this);
 		}
 	}
 
-	public final SrcContext src() throws RecognitionException {
-		SrcContext _localctx = new SrcContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_src);
+	public final InitContext init() throws RecognitionException {
+		InitContext _localctx = new InitContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_init);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-				setState(14);
+				setState(16);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
-						setState(14);
+						setState(16);
 						switch (_input.LA(1)) {
 						case JAVA: {
-							setState(12);
-							match(JAVA);
+							setState(14);
+							java();
 						}
 							break;
 						case JQBegin: {
-							setState(13);
+							setState(15);
 							jQuery();
 						}
 							break;
@@ -134,12 +134,58 @@ public class JjQueryParser extends Parser {
 							throw new NoViableAltException(this);
 						}
 					}
-					setState(16);
+					setState(18);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while (_la == JAVA || _la == JQBegin);
-				setState(18);
+				setState(20);
 				match(EOF);
+			}
+		} catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		} finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class JavaContext extends ParserRuleContext {
+		public TerminalNode JAVA() {
+			return getToken(JjQueryParser.JAVA, 0);
+		}
+
+		public JavaContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+
+		@Override
+		public int getRuleIndex() {
+			return RULE_java;
+		}
+
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if (listener instanceof JjQueryParserListener)
+				((JjQueryParserListener) listener).enterJava(this);
+		}
+
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if (listener instanceof JjQueryParserListener)
+				((JjQueryParserListener) listener).exitJava(this);
+		}
+	}
+
+	public final JavaContext java() throws RecognitionException {
+		JavaContext _localctx = new JavaContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_java);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+				setState(22);
+				match(JAVA);
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -208,33 +254,33 @@ public class JjQueryParser extends Parser {
 
 	public final JQueryContext jQuery() throws RecognitionException {
 		JQueryContext _localctx = new JQueryContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_jQuery);
+		enterRule(_localctx, 4, RULE_jQuery);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-				setState(20);
+				setState(24);
 				match(JQBegin);
-				setState(26);
+				setState(30);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << IN)
 						| (1L << OUT) | (1L << ID))) != 0)) {
 					{
-						setState(24);
+						setState(28);
 						switch (_input.LA(1)) {
 						case IN: {
-							setState(21);
+							setState(25);
 							in();
 						}
 							break;
 						case OUT: {
-							setState(22);
+							setState(26);
 							out();
 						}
 							break;
 						case ID: {
-							setState(23);
+							setState(27);
 							assign();
 						}
 							break;
@@ -242,11 +288,11 @@ public class JjQueryParser extends Parser {
 							throw new NoViableAltException(this);
 						}
 					}
-					setState(28);
+					setState(32);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(29);
+				setState(33);
 				match(JQEnd);
 			}
 		} catch (RecognitionException re) {
@@ -296,15 +342,15 @@ public class JjQueryParser extends Parser {
 
 	public final InContext in() throws RecognitionException {
 		InContext _localctx = new InContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_in);
+		enterRule(_localctx, 6, RULE_in);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-				setState(31);
+				setState(35);
 				match(IN);
-				setState(32);
+				setState(36);
 				match(ID);
-				setState(33);
+				setState(37);
 				match(SEMICOLON);
 			}
 		} catch (RecognitionException re) {
@@ -354,15 +400,15 @@ public class JjQueryParser extends Parser {
 
 	public final OutContext out() throws RecognitionException {
 		OutContext _localctx = new OutContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_out);
+		enterRule(_localctx, 8, RULE_out);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-				setState(35);
+				setState(39);
 				match(OUT);
-				setState(36);
+				setState(40);
 				match(ID);
-				setState(37);
+				setState(41);
 				match(SEMICOLON);
 			}
 		} catch (RecognitionException re) {
@@ -440,31 +486,31 @@ public class JjQueryParser extends Parser {
 
 	public final AssignContext assign() throws RecognitionException {
 		AssignContext _localctx = new AssignContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_assign);
+		enterRule(_localctx, 10, RULE_assign);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-				setState(39);
-				match(ID);
-				setState(40);
-				match(EQUALS);
-				setState(41);
-				match(DOLLAR);
-				setState(42);
-				match(OPEN_PARENTHESIS);
 				setState(43);
-				match(QUOTES);
+				match(ID);
 				setState(44);
-				match(ID);
+				match(EQUALS);
 				setState(45);
-				selector();
+				match(DOLLAR);
 				setState(46);
-				match(ID);
+				match(OPEN_PARENTHESIS);
 				setState(47);
 				match(QUOTES);
 				setState(48);
-				match(CLOSE_PARENTHESIS);
+				match(ID);
 				setState(49);
+				selector();
+				setState(50);
+				match(ID);
+				setState(51);
+				match(QUOTES);
+				setState(52);
+				match(CLOSE_PARENTHESIS);
+				setState(53);
 				match(SEMICOLON);
 			}
 		} catch (RecognitionException re) {
@@ -530,23 +576,23 @@ public class JjQueryParser extends Parser {
 
 	public final SelectorContext selector() throws RecognitionException {
 		SelectorContext _localctx = new SelectorContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_selector);
+		enterRule(_localctx, 12, RULE_selector);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-				setState(51);
-				match(OPEN_BRACKET);
-				setState(52);
-				match(ID);
-				setState(53);
-				match(OP);
-				setState(54);
-				match(APOSTROPHE);
 				setState(55);
-				match(ID);
+				match(OPEN_BRACKET);
 				setState(56);
-				match(APOSTROPHE);
+				match(ID);
 				setState(57);
+				match(OP);
+				setState(58);
+				match(APOSTROPHE);
+				setState(59);
+				match(ID);
+				setState(60);
+				match(APOSTROPHE);
+				setState(61);
 				match(CLOSE_BRACKET);
 			}
 		} catch (RecognitionException re) {
@@ -559,22 +605,23 @@ public class JjQueryParser extends Parser {
 		return _localctx;
 	}
 
-	public static final String _serializedATN = "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\26>\4\2\t\2\4\3\t"
-			+ "\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\6\2\21\n\2\r\2\16\2\22\3\2"
-			+ "\3\2\3\3\3\3\3\3\3\3\7\3\33\n\3\f\3\16\3\36\13\3\3\3\3\3\3\4\3\4\3\4\3"
-			+ "\4\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7"
-			+ "\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\2\2\b\2\4\6\b\n\f\2\2<\2\20\3\2\2\2\4"
-			+ "\26\3\2\2\2\6!\3\2\2\2\b%\3\2\2\2\n)\3\2\2\2\f\65\3\2\2\2\16\21\7\5\2"
-			+ "\2\17\21\5\4\3\2\20\16\3\2\2\2\20\17\3\2\2\2\21\22\3\2\2\2\22\20\3\2\2"
-			+ "\2\22\23\3\2\2\2\23\24\3\2\2\2\24\25\7\2\2\3\25\3\3\2\2\2\26\34\7\6\2"
-			+ "\2\27\33\5\6\4\2\30\33\5\b\5\2\31\33\5\n\6\2\32\27\3\2\2\2\32\30\3\2\2"
-			+ "\2\32\31\3\2\2\2\33\36\3\2\2\2\34\32\3\2\2\2\34\35\3\2\2\2\35\37\3\2\2"
-			+ "\2\36\34\3\2\2\2\37 \7\7\2\2 \5\3\2\2\2!\"\7\b\2\2\"#\7\n\2\2#$\7\r\2"
-			+ "\2$\7\3\2\2\2%&\7\t\2\2&\'\7\n\2\2\'(\7\r\2\2(\t\3\2\2\2)*\7\n\2\2*+\7"
-			+ "\16\2\2+,\7\17\2\2,-\7\21\2\2-.\7\13\2\2./\7\n\2\2/\60\5\f\7\2\60\61\7"
-			+ "\n\2\2\61\62\7\13\2\2\62\63\7\22\2\2\63\64\7\r\2\2\64\13\3\2\2\2\65\66"
-			+ "\7\23\2\2\66\67\7\n\2\2\678\7\20\2\289\7\f\2\29:\7\n\2\2:;\7\f\2\2;<\7"
-			+ "\24\2\2<\r\3\2\2\2\6\20\22\32\34";
+	public static final String _serializedATN = "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\26B\4\2\t\2\4\3\t"
+			+ "\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\6\2\23\n\2\r\2\16\2"
+			+ "\24\3\2\3\2\3\3\3\3\3\4\3\4\3\4\3\4\7\4\37\n\4\f\4\16\4\"\13\4\3\4\3\4"
+			+ "\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"
+			+ "\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\2\2\t\2\4\6\b\n\f\16\2"
+			+ "\2?\2\22\3\2\2\2\4\30\3\2\2\2\6\32\3\2\2\2\b%\3\2\2\2\n)\3\2\2\2\f-\3"
+			+ "\2\2\2\169\3\2\2\2\20\23\5\4\3\2\21\23\5\6\4\2\22\20\3\2\2\2\22\21\3\2"
+			+ "\2\2\23\24\3\2\2\2\24\22\3\2\2\2\24\25\3\2\2\2\25\26\3\2\2\2\26\27\7\2"
+			+ "\2\3\27\3\3\2\2\2\30\31\7\5\2\2\31\5\3\2\2\2\32 \7\6\2\2\33\37\5\b\5\2"
+			+ "\34\37\5\n\6\2\35\37\5\f\7\2\36\33\3\2\2\2\36\34\3\2\2\2\36\35\3\2\2\2"
+			+ "\37\"\3\2\2\2 \36\3\2\2\2 !\3\2\2\2!#\3\2\2\2\" \3\2\2\2#$\7\7\2\2$\7"
+			+ "\3\2\2\2%&\7\b\2\2&\'\7\n\2\2\'(\7\r\2\2(\t\3\2\2\2)*\7\t\2\2*+\7\n\2"
+			+ "\2+,\7\r\2\2,\13\3\2\2\2-.\7\n\2\2./\7\16\2\2/\60\7\17\2\2\60\61\7\21"
+			+ "\2\2\61\62\7\13\2\2\62\63\7\n\2\2\63\64\5\16\b\2\64\65\7\n\2\2\65\66\7"
+			+ "\13\2\2\66\67\7\22\2\2\678\7\r\2\28\r\3\2\2\29:\7\23\2\2:;\7\n\2\2;<\7"
+			+ "\20\2\2<=\7\f\2\2=>\7\n\2\2>?\7\f\2\2?@\7\24\2\2@\17\3\2\2\2\6\22\24\36"
+			+ " ";
 	public static final ATN _ATN = new ATNDeserializer()
 			.deserialize(_serializedATN.toCharArray());
 	static {

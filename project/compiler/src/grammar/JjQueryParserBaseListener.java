@@ -64,6 +64,28 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
+	public void enterInit(@NotNull JjQueryParser.InitContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitInit(@NotNull JjQueryParser.InitContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
 	public void enterJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
 	}
 
@@ -86,7 +108,7 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
-	public void enterSrc(@NotNull JjQueryParser.SrcContext ctx) {
+	public void enterJava(@NotNull JjQueryParser.JavaContext ctx) {
 	}
 
 	/**
@@ -97,7 +119,7 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
-	public void exitSrc(@NotNull JjQueryParser.SrcContext ctx) {
+	public void exitJava(@NotNull JjQueryParser.JavaContext ctx) {
 	}
 
 	/**

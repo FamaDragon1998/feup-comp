@@ -4,12 +4,17 @@ options {
 	tokenVocab = JjQueryLexer;
 }
 
-src
+init
 :
 	(
-		JAVA
+		java
 		| jQuery
 	)+ EOF
+;
+
+java
+:
+	JAVA
 ;
 
 jQuery

@@ -42,6 +42,22 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	void exitAssign(@NotNull JjQueryParser.AssignContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link JjQueryParser#init}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void enterInit(@NotNull JjQueryParser.InitContext ctx);
+
+	/**
+	 * Exit a parse tree produced by {@link JjQueryParser#init}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void exitInit(@NotNull JjQueryParser.InitContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#jQuery}.
 	 * 
 	 * @param ctx
@@ -58,20 +74,20 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	void exitJQuery(@NotNull JjQueryParser.JQueryContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link JjQueryParser#src}.
+	 * Enter a parse tree produced by {@link JjQueryParser#java}.
 	 * 
 	 * @param ctx
 	 *            the parse tree
 	 */
-	void enterSrc(@NotNull JjQueryParser.SrcContext ctx);
+	void enterJava(@NotNull JjQueryParser.JavaContext ctx);
 
 	/**
-	 * Exit a parse tree produced by {@link JjQueryParser#src}.
+	 * Exit a parse tree produced by {@link JjQueryParser#java}.
 	 * 
 	 * @param ctx
 	 *            the parse tree
 	 */
-	void exitSrc(@NotNull JjQueryParser.SrcContext ctx);
+	void exitJava(@NotNull JjQueryParser.JavaContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#in}.
