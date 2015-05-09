@@ -1,6 +1,6 @@
-/Lexer.java
-/Lexer.tokens
-/Parser.java
-/Parser.tokens
-/ParserBaseListener.java
-/ParserListener.java
+/JjQueryLexer.java
+/JjQueryLexer.tokens
+/JjQueryParser.java
+/JjQueryParser.tokens
+/JjQueryParserBaseListener.java
+/JjQueryParserListener.java

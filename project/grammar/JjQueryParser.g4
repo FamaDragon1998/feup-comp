@@ -1,7 +1,7 @@
-parser grammar Parser;
+parser grammar JjQueryParser;
 
 options {
-	tokenVocab = Lexer;
+	tokenVocab = JjQueryLexer;
 }
 
 src
