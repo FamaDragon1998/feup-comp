@@ -18,6 +18,7 @@ jQuery
 	(
 		in
 		| out
+		| assign
 	)* JQEnd
 ;
 
@@ -29,4 +30,15 @@ in
 out
 :
 	OUT ID SEMICOLON
+;
+
+assign
+:
+	ID EQUALS DOLLAR OPEN_PARENTHESIS QUOTES ID selector ID QUOTES
+	CLOSE_PARENTHESIS SEMICOLON
+;
+
+selector
+:
+	OPEN_BRACKET ID OP APOSTROPHE ID APOSTROPHE CLOSE_BRACKET
 ;

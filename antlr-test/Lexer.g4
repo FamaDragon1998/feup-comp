@@ -39,9 +39,60 @@ ID
 	[a-zA-Z_] [a-zA-Z0-9_]*
 ;
 
+QUOTES
+:
+	'\"'
+;
+
+APOSTROPHE
+:
+	'\''
+;
+
 SEMICOLON
 :
 	';'
+;
+
+EQUALS
+:
+	'='
+;
+
+DOLLAR
+:
+	'$'
+;
+
+OP
+:
+	'*='
+	| '|='
+	| '~='
+	| '$='
+	| '='
+	| '!='
+	| '^='
+;
+
+OPEN_PARENTHESIS
+:
+	'('
+;
+
+CLOSE_PARENTHESIS
+:
+	')'
+;
+
+OPEN_BRACKET
+:
+	'['
+;
+
+CLOSE_BRACKET
+:
+	']'
 ;
 
 WS
