@@ -2,7 +2,7 @@ parser grammar Parser;
 
 options {
 	tokenVocab = Lexer;
-} // use tokens from ModeTagsLexer.g4
+}
 
 src
 :
