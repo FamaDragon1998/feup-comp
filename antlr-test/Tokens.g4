@@ -1,5 +1,10 @@
 lexer grammar Tokens;
 
+@lexer::members {
+    public static final int WHITESPACE = 1;
+    public static final int COMMENTS = 2;
+}
+
 ID
 :
 	[a-zA-Z] [a-zA-Z0-9]*
@@ -78,18 +83,20 @@ NEWLINE
 
 SINGLE_LINE_COMMENT
 :
-	'//' ~[\r\n]*
+	'//' .*? '\n' -> channel ( COMMENTS ) // channel(1)
+
 ;
 
-MULTI_LINE_COMMENT
-:
-	(
-		'/**/'
-		| '/*' ~['@jQ'] .*? '*/'
-	) -> skip
-;
+//MULTI_LINE_COMMENT
+//:
+//	(
+//		'/**/'
+//		| '/*' ~['@jQ'] .*? '*/'
+//	) -> skip
+//;
 
 WS
 :
-	[ \t\r\n]+ -> skip
-; // skip spaces, tabs, newlines
+	[ \t\r\n]+ -> channel ( WHITESPACE ) // channel(2)
+
+;
