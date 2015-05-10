@@ -32,7 +32,7 @@ public class Main {
 
 		ParseTree tree = parser.init(); // begin parsing at init rule
 
-		System.out.println(tree.toStringTree(parser)); // print LISP-style tree
+		// System.out.println(tree.toStringTree(parser)); // print tree
 
 		// Create a generic parse tree walker that can trigger callbacks
 		ParseTreeWalker walker = new ParseTreeWalker();
