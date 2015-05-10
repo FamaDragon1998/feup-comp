@@ -1,8 +1,6 @@
-package test;
-
 public class Book {
 
-	private String isbn, title;
+	public String isbn, title;
 
 	public Book(String isbn, String title) {
 		this.isbn = isbn;

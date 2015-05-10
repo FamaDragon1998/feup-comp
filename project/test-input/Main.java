@@ -1,5 +1,3 @@
-package test;
-
 import java.util.ArrayList;
 
 public class Main {
@@ -31,7 +29,7 @@ public class Main {
 		in library; // library is a collection of objects of the class book
 		out selected; // selected is an output collection of selected book ISBNs
 		
-		selected = $("library[title*='compiler'] isbn");
+		selected = $("library[title*='comp'] isbn");
 		
 		*/
 		
