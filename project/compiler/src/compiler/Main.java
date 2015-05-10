@@ -4,6 +4,7 @@ import grammar.JjQueryLexer;
 import grammar.JjQueryParser;
 
 import java.io.FileInputStream;
+import java.io.PrintWriter;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -13,6 +14,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class Main {
 
 	private static final String INPUT = "../test-input/Main.java";
+	private static final String OUTPUT = "test/Main.java";
 
 	public static void main(String[] args) throws Exception {
 		FileInputStream stream = new FileInputStream(INPUT);
@@ -34,10 +36,12 @@ public class Main {
 		// Create a generic parse tree walker that can trigger callbacks
 		ParseTreeWalker walker = new ParseTreeWalker();
 
-		// Walk the tree created during the parse, trigger callbacks
-		walker.walk(new Translator(), tree);
+		PrintWriter writer = new PrintWriter(OUTPUT, "UTF-8");
 
-		System.out.println(); // print a \n after translation
+		// Walk the tree created during the parse, trigger callbacks
+		walker.walk(new Translator(writer), tree);
+
+		writer.close();
 	}
 
 }
