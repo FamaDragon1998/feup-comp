@@ -3,6 +3,7 @@ package compiler;
 import grammar.JjQueryLexer;
 import grammar.JjQueryParser;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
 
@@ -35,6 +36,9 @@ public class Main {
 
 		// Create a generic parse tree walker that can trigger callbacks
 		ParseTreeWalker walker = new ParseTreeWalker();
+
+		File file = new File(OUTPUT);
+		file.getParentFile().mkdirs();
 
 		PrintWriter writer = new PrintWriter(OUTPUT, "UTF-8");
 
