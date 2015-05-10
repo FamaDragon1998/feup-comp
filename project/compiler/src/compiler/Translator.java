@@ -1,17 +1,23 @@
 package compiler;
 
+import grammar.JjQueryLexer;
 import grammar.JjQueryParser;
 import grammar.JjQueryParserBaseListener;
 
 import java.io.PrintWriter;
+import java.util.List;
 
+import org.antlr.v4.runtime.BufferedTokenStream;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 
 public class Translator extends JjQueryParserBaseListener {
 
+	private BufferedTokenStream tokens;
 	private PrintWriter outputStream;
 
-	public Translator(PrintWriter writer) {
+	public Translator(BufferedTokenStream tokens, PrintWriter writer) {
+		this.tokens = tokens;
 		this.outputStream = writer;
 	}
 
@@ -31,19 +37,37 @@ public class Translator extends JjQueryParserBaseListener {
 		outputStream.print("// --- END --- jQuery block");
 	}
 
+	private String in;
+
 	@Override
 	public void enterIn(@NotNull JjQueryParser.InContext ctx) {
-		outputStream.println("// in");
+		List<Token> commentsChannel = tokens.getHiddenTokensToRight(ctx
+				.getStop().getTokenIndex(), JjQueryLexer.COMMENTS_CHANNEL);
+
+		if (commentsChannel != null)
+			for (Token token : commentsChannel)
+				outputStream.print(token.getText());
+
+		outputStream.println("// " + ctx.getText());
 		outputStream.println();
 	}
+
+	private String out;
 
 	@Override
 	public void enterOut(@NotNull JjQueryParser.OutContext ctx) {
-		outputStream.println("// out");
+		List<Token> commentsChannel = tokens.getHiddenTokensToRight(ctx
+				.getStop().getTokenIndex(), JjQueryLexer.COMMENTS_CHANNEL);
+
+		if (commentsChannel != null)
+			for (Token token : commentsChannel)
+				outputStream.print(token.getText());
+
+		outputStream.println("// " + ctx.getText());
 		outputStream.println();
 	}
 
-	String out, in, attribute;
+	private String attribute;
 
 	@Override
 	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {

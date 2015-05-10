@@ -43,9 +43,11 @@ public class Main {
 		PrintWriter writer = new PrintWriter(OUTPUT, "UTF-8");
 
 		// Walk the tree created during the parse, trigger callbacks
-		walker.walk(new Translator(writer), tree);
+		walker.walk(new Translator(tokens, writer), tree);
 
 		writer.close();
+
+		System.out.println("Translation finished.");
 	}
 
 }
