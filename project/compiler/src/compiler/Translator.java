@@ -98,19 +98,18 @@ public class Translator extends JjQueryParserBaseListener {
 
 	@Override
 	public void enterSelector(@NotNull JjQueryParser.SelectorContext ctx) {
+		String attr = ctx.ID(0).toString();
+		String substr = ctx.ID(1).toString();
+
 		switch (ctx.OP().getText()) {
 		/*
 		 * Selects elements that have the specified attribute with a value
 		 * containing a given substring.
 		 */
 		case "*=":
-			String attr = ctx.ID(0).toString();
-			String substr = ctx.ID(1).toString();
-
 			// ... title.toLowerCase().contains("compiler") ...
 			outputStream.print(attr + ".toLowerCase().contains(\""
 					+ substr.toLowerCase() + "\")");
-
 			break;
 
 		/*
@@ -118,6 +117,9 @@ public class Translator extends JjQueryParserBaseListener {
 		 * ending exactly with a given string. The comparison is case sensitive.
 		 */
 		case "$=":
+			// ... title.endsWith("compiler") ...
+			outputStream.print(attr + ".endsWith(\"" + substr.toLowerCase()
+					+ "\")");
 			break;
 
 		/*
@@ -125,6 +127,9 @@ public class Translator extends JjQueryParserBaseListener {
 		 * exactly equal to a certain value.
 		 */
 		case "=":
+			// ... title.toLowerCase().equals("compiler") ...
+			outputStream.print(attr + ".toLowerCase().equals(\""
+					+ substr.toLowerCase() + "\")");
 			break;
 
 		/*
@@ -139,6 +144,9 @@ public class Translator extends JjQueryParserBaseListener {
 		 * beginning exactly with a given string.
 		 */
 		case "^=":
+			// ... title.toLowerCase().startsWith("compiler") ...
+			outputStream.print(attr + ".toLowerCase().startsWith(\""
+					+ substr.toLowerCase() + "\")");
 			break;
 
 		default:
