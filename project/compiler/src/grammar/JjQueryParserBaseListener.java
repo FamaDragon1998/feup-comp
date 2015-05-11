@@ -20,50 +20,6 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
-	public void enterSelector(@NotNull JjQueryParser.SelectorContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void exitSelector(@NotNull JjQueryParser.SelectorContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
 	public void enterInit(@NotNull JjQueryParser.InitContext ctx) {
 	}
 
@@ -76,28 +32,6 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 */
 	@Override
 	public void exitInit(@NotNull JjQueryParser.InitContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void enterJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void exitJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
 	}
 
 	/**
@@ -130,6 +64,28 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
+	public void enterJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
 	public void enterIn(@NotNull JjQueryParser.InContext ctx) {
 	}
 
@@ -152,6 +108,28 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
+	public void enterSelector(@NotNull JjQueryParser.SelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitSelector(@NotNull JjQueryParser.SelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
 	public void enterOut(@NotNull JjQueryParser.OutContext ctx) {
 	}
 
@@ -164,6 +142,28 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 */
 	@Override
 	public void exitOut(@NotNull JjQueryParser.OutContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
 	}
 
 	/**
