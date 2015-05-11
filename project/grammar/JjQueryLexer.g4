@@ -54,11 +54,6 @@ SEMICOLON
 	';'
 ;
 
-EQUALS
-:
-	'='
-;
-
 DOLLAR
 :
 	'$'
