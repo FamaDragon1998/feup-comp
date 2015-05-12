@@ -85,18 +85,6 @@ public class Translator extends JjQueryParserBaseListener {
 	}
 
 	@Override
-	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
-		// ... )
-		outputStream.println(")");
-
-		// selected.add(library.get(i).isbn);
-		outputStream
-				.println(out + ".add(" + in + ".get(i)." + attribute + ");");
-
-		outputStream.println();
-	}
-
-	@Override
 	public void enterSelector(@NotNull JjQueryParser.SelectorContext ctx) {
 		String attr = ctx.ID(0).toString();
 		String substr = ctx.ID(1).toString();
@@ -118,8 +106,7 @@ public class Translator extends JjQueryParserBaseListener {
 		 */
 		case "$=":
 			// ... title.endsWith("compiler") ...
-			outputStream.print(attr + ".endsWith(\"" + substr.toLowerCase()
-					+ "\")");
+			outputStream.print(attr + ".endsWith(\"" + substr + "\")");
 			break;
 
 		/*
@@ -152,6 +139,18 @@ public class Translator extends JjQueryParserBaseListener {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
+		// ... )
+		outputStream.println(")");
+
+		// selected.add(library.get(i).isbn);
+		outputStream
+				.println(out + ".add(" + in + ".get(i)." + attribute + ");");
+
+		outputStream.println();
 	}
 
 }
