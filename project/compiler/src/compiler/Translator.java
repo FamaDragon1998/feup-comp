@@ -71,6 +71,12 @@ public class Translator extends JjQueryParserBaseListener {
 
 	@Override
 	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
+		// semantic analysis
+		if (!ctx.OP().getText().equals("="))
+			System.err.println("Expecting '=' on assignment, line "
+					+ ctx.getStart().getLine());
+
+		// translation
 		outputStream.println("// " + ctx.getText());
 
 		out = ctx.ID(0).getText();
