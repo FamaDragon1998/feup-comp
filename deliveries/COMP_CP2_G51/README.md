@@ -2,19 +2,20 @@
 
 ## Folder structure
 
-COMP_CP2_G51/  
-├── project/  
-│   ├── compiler/  
-│   │   ├── Main.java/  
-│   │   └── Translator.java/  
-│   └── grammar/  
-│       ├── JjQueryLexer.g4/  
-│       └── JjQueryParser.g4/  
-├── test-input/  
-│   ├── Book.java  
-│   └── Main.java  
+```
+COMP_CP2_G51/
+├── project/
+│   ├── compiler/
+│   │   ├── Main.java/
+│   │   └── Translator.java/
+│   └── grammar/
+│       ├── JjQueryLexer.g4/
+│       └── JjQueryParser.g4/
+├── test-input/
+│   ├── Book.java
+│   └── Main.java
 └── README.md
-
+```
 
 ## Instructions
 
