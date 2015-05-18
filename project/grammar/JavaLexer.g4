@@ -1,5 +1,10 @@
 lexer grammar JavaLexer;
 
+tokens {
+	WHITESPACE_CHANNEL,
+	COMMENTS_CHANNEL
+}
+
 // LEXER
 
 // §3.9 Keywords
@@ -856,10 +861,100 @@ WS
 
 COMMENT
 :
-	'/*' .*? '*/' -> skip
+	'/*' ~['@jQ'] .*? '*/' -> skip
 ;
 
 LINE_COMMENT
 :
 	'//' ~[\r\n]* -> skip
+;
+
+JQBegin
+:
+	'/*@jQ' -> pushMode ( JQUERY )
+;
+
+mode JQUERY;
+
+JQEnd
+:
+	'*/' -> popMode
+;
+
+IN
+:
+	'in'
+;
+
+OUT
+:
+	'out'
+;
+
+ID
+:
+	[a-zA-Z_] [a-zA-Z0-9_]*
+;
+
+QUOTES
+:
+	'\"'
+;
+
+APOSTROPHE
+:
+	'\''
+;
+
+/*
+SEMICOLON
+:
+	';'
+;
+*/
+DOLLAR
+:
+	'$'
+;
+
+OP
+:
+	'|='
+	| '*='
+	| '~='
+	| '$='
+	| '='
+	| '!='
+	| '^='
+;
+
+/*
+OPEN_PARENTHESIS
+:
+	'('
+;
+
+CLOSE_PARENTHESIS
+:
+	')'
+;
+
+OPEN_BRACKET
+:
+	'['
+;
+
+CLOSE_BRACKET
+:
+	']'
+;
+*/
+JQUERY_WS
+:
+	[ \t\r\n]+ -> channel ( WHITESPACE_CHANNEL )
+;
+
+SINGLE_LINE_COMMENT
+:
+	'//' .*? '\n' -> channel ( COMMENTS_CHANNEL )
 ;
