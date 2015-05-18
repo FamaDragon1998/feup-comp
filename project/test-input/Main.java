@@ -1,5 +1,24 @@
 import java.util.ArrayList;
 
+class Book {
+
+	public String isbn, title;
+
+	public Book(String isbn, String title) {
+		this.isbn = isbn;
+		this.title = title;
+	}
+
+	public String getISBN() {
+		return isbn;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+}
+
 public class Main {
 
 	private static ArrayList<Book> library;
@@ -24,15 +43,16 @@ public class Main {
 		// selected is ArrayList<String> of ISBNs
 		ArrayList<String> selected = new ArrayList<String>();
 
-		/*@jQ
-		
-		in library; // library is a collection of objects of the class book
-		out selected; // selected is an output collection of selected book ISBNs
-		
-		selected = $("library[title*='comp'] isbn");
-		
-		*/
-		
+		/*
+		 * @jQ
+		 * 
+		 * in library; // library is a collection of objects of the class book
+		 * out selected; // selected is an output collection of selected book
+		 * ISBNs
+		 * 
+		 * selected = $("library[title*='comp'] isbn");
+		 */
+
 		System.out.println("Selected:");
 		for (String str : selected)
 			System.out.println(str);
