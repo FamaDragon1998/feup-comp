@@ -43,15 +43,14 @@ public class Main {
 		// selected is ArrayList<String> of ISBNs
 		ArrayList<String> selected = new ArrayList<String>();
 
-		/*
-		 * @jQ
-		 * 
-		 * in library; // library is a collection of objects of the class book
-		 * out selected; // selected is an output collection of selected book
-		 * ISBNs
-		 * 
-		 * selected = $("library[title*='comp'] isbn");
-		 */
+		/*@jQ
+
+		in library; // library is a collection of objects of the class book
+		out selected; // selected is an output collection of selected book ISBNs
+		
+		selected = $("library[title*='comp'] isbn");
+		
+		*/
 
 		System.out.println("Selected:");
 		for (String str : selected)
