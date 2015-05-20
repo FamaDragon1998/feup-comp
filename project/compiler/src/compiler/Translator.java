@@ -1,13 +1,13 @@
 package compiler;
 
 import grammar.JjQueryLexer;
-import grammar.JjQueryParser;
 import grammar.JjQueryParserBaseListener;
 
 import java.io.PrintWriter;
 import java.util.List;
 
 import org.antlr.v4.runtime.BufferedTokenStream;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -21,6 +21,22 @@ public class Translator extends JjQueryParserBaseListener {
 		this.outputStream = writer;
 	}
 
+	@Override
+	public void enterEveryRule(@NotNull ParserRuleContext ctx) {
+		List<Token> whiteSpacesChannel;
+
+		whiteSpacesChannel = tokens.getHiddenTokensToLeft(ctx.getStart()
+				.getTokenIndex(), JjQueryLexer.WHITESPACE_CHANNEL);
+
+		if (whiteSpacesChannel != null)
+			for (Token t : whiteSpacesChannel)
+				outputStream.print(t.getText());
+
+		// code
+		outputStream.print(ctx.getText());
+	}
+
+	/*
 	@Override
 	public void enterJava(@NotNull JjQueryParser.JavaContext ctx) {
 		outputStream.print(ctx.getText());
@@ -96,46 +112,36 @@ public class Translator extends JjQueryParserBaseListener {
 		String substr = ctx.ID(1).toString();
 
 		switch (ctx.OP().getText()) {
-		/*
-		 * Selects elements that have the specified attribute with a value
-		 * containing a given substring.
-		 */
+		// Selects elements that have the specified attribute with a value
+		// containing a given substring.
 		case "*=":
 			// ... title.toLowerCase().contains("compiler") ...
 			outputStream.print(attr + ".toLowerCase().contains(\""
 					+ substr.toLowerCase() + "\")");
 			break;
 
-		/*
-		 * Selects elements that have the specified attribute with a value
-		 * ending exactly with a given string. The comparison is case sensitive.
-		 */
+		// Selects elements that have the specified attribute with a value
+		// ending exactly with a given string. The comparison is case sensitive.
 		case "$=":
 			// ... title.endsWith("compiler") ...
 			outputStream.print(attr + ".endsWith(\"" + substr + "\")");
 			break;
 
-		/*
-		 * Selects elements that have the specified attribute with a value
-		 * exactly equal to a certain value.
-		 */
+		// Selects elements that have the specified attribute with a value
+		// exactly equal to a certain value.
 		case "=":
 			// ... title.toLowerCase().equals("compiler") ...
 			outputStream.print(attr + ".toLowerCase().equals(\""
 					+ substr.toLowerCase() + "\")");
 			break;
 
-		/*
-		 * Select elements that either don’t have the specified attribute, or do
-		 * have the specified attribute but not with a certain value.
-		 */
+		// Select elements that either don’t have the specified attribute, or do
+		// have the specified attribute but not with a certain value.
 		case "!=":
 			break;
 
-		/*
-		 * Selects elements that have the specified attribute with a value
-		 * beginning exactly with a given string.
-		 */
+		// Selects elements that have the specified attribute with a value
+		// beginning exactly with a given string.
 		case "^=":
 			// ... title.toLowerCase().startsWith("compiler") ...
 			outputStream.print(attr + ".toLowerCase().startsWith(\""
@@ -158,5 +164,6 @@ public class Translator extends JjQueryParserBaseListener {
 
 		outputStream.println();
 	}
+	*/
 
 }

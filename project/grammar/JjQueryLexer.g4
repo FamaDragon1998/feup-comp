@@ -893,17 +893,17 @@ ELLIPSIS
 
 WS
 :
-	[ \t\r\n\u000C]+ -> skip
+	[ \t\r\n\u000C]+ -> channel ( WHITESPACE_CHANNEL )
 ;
 
 COMMENT
 :
-	'/*' ~['@jQ'] .*? '*/' -> skip
+	'/*' ~['@jQ'] .*? '*/' -> channel ( COMMENTS_CHANNEL )
 ;
 
 LINE_COMMENT
 :
-	'//' ~[\r\n]* -> skip
+	'//' ~[\r\n]* -> channel ( COMMENTS_CHANNEL )
 ;
 
 //
@@ -990,7 +990,7 @@ CLOSE_BRACKET
 
 JQUERY_WS
 :
-	[ \t\r\n]+ -> channel ( WHITESPACE_CHANNEL )
+	[ \t\r\n\u000C]+ -> channel ( WHITESPACE_CHANNEL )
 ;
 
 SINGLE_LINE_COMMENT

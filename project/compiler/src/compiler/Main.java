@@ -30,7 +30,7 @@ public class Main {
 		// create a parser that feeds off the tokens buffer
 		JjQueryParser parser = new JjQueryParser(tokens);
 
-		ParseTree tree = parser.init(); // begin parsing at init rule
+		ParseTree tree = parser.compilationUnit(); // begin parsing at init rule
 
 		// System.out.println(tree.toStringTree(parser)); // print tree
 
