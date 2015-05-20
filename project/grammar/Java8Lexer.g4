@@ -906,6 +906,10 @@ LINE_COMMENT
 	'//' ~[\r\n]* -> skip
 ;
 
+//
+// --- JQUERY ---
+//
+
 JQBegin
 :
 	'/*@jQ' -> pushMode ( JQUERY )
