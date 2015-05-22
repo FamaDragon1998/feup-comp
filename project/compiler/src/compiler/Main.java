@@ -37,14 +37,17 @@ public class Main {
 		// Create a generic parse tree walker that can trigger callbacks
 		ParseTreeWalker walker = new ParseTreeWalker();
 
+		Translator translator = new Translator(tokens);
+
+		// Walk the tree created during the parse, trigger callbacks
+		walker.walk(translator, tree);
+
+		// create output folder if it does not exist
 		File file = new File(OUTPUT);
 		file.getParentFile().mkdirs();
 
 		PrintWriter writer = new PrintWriter(OUTPUT, "UTF-8");
-
-		// Walk the tree created during the parse, trigger callbacks
-		walker.walk(new Translator(tokens, writer), tree);
-
+		writer.println(translator.rewriter.getText());
 		writer.close();
 
 		System.out.println("Translation finished.");
