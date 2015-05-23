@@ -44,12 +44,7 @@ public class Main {
 		ArrayList<String> selected = new ArrayList<String>();
 
 		/*@jQ
-
-		in library; // library is a collection of objects of the class book
-		out selected; // selected is an output collection of selected book ISBNs
-		
 		selected = $("library[title*='comp'] isbn");
-		
 		*/
 
 		System.out.println("Selected:");
