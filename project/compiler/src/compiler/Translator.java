@@ -1,20 +1,22 @@
 package compiler;
 
-import ir.IntermediateRepresentation;
-
-import java.util.List;
-
 import grammar.JjQueryLexer;
 import grammar.JjQueryParser;
 import grammar.JjQueryParser.FieldModifierContext;
 import grammar.JjQueryParser.VariableDeclaratorContext;
 import grammar.JjQueryParser.VariableDeclaratorListContext;
 import grammar.JjQueryParserBaseListener;
+import ir.IntermediateRepresentation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStreamRewriter;
 import org.antlr.v4.runtime.misc.NotNull;
+
+import utils.Log;
 
 public class Translator extends JjQueryParserBaseListener {
 
@@ -31,18 +33,15 @@ public class Translator extends JjQueryParserBaseListener {
 	@Override
 	public void enterFieldDeclaration(
 			@NotNull JjQueryParser.FieldDeclarationContext ctx) {
-		System.out.println("DBG: " + ctx.getText());
-
+		ArrayList<String> modifiers = new ArrayList<String>();
 		for (FieldModifierContext fmc : ctx.fieldModifier())
-			System.out.println("MODIFIER: " + fmc.getText());
+			modifiers.add(fmc.getText());
 
-		System.out.println("TYPE: " + ctx.unannType().getText());
+		String type = ctx.unannType().getText();
 
 		VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
 		for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
-			System.out.println("VAR: " + vdc.getText());
-
-		System.out.println();
+			ir.addField(modifiers, type, vdc.getText());
 	}
 
 	//
@@ -60,6 +59,36 @@ public class Translator extends JjQueryParserBaseListener {
 	}
 
 	private String indentation, translation, in, out, attribute;
+
+	@Override
+	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
+		int currentLine = ctx.getStart().getLine();
+
+		initIndentationAndTranslation(ctx);
+
+		// semantic analysis
+		if (!ctx.OP().getText().equals("="))
+			Log.error("Expecting '=' on assignment, line " + currentLine);
+
+		// translation
+		translation += "// " + ctx.getText() + "\n";
+
+		// initialize variables content
+		out = ctx.ID(0).getText();
+		in = ctx.ID(1).getText();
+		attribute = ctx.ID(2).getText();
+
+		ir.assertExisting(attribute, currentLine);
+		ir.assertVisible(attribute, currentLine);
+
+		// for (int i = 0; i < library.size(); i++) {
+		translation += indentation;
+		translation += "for (int i = 0; i < " + in + ".size(); i++)" + "\n";
+
+		// if (library.get(i). ...
+		translation += indentation + "\t";
+		translation += "if (" + in + ".get(i).";
+	}
 
 	private void initIndentationAndTranslation(JjQueryParser.AssignContext ctx) {
 		indentation = "";
@@ -82,39 +111,17 @@ public class Translator extends JjQueryParserBaseListener {
 	}
 
 	@Override
-	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
-		initIndentationAndTranslation(ctx);
-
-		// semantic analysis
-		if (!ctx.OP().getText().equals("="))
-			System.err.println("Expecting '=' on assignment, line "
-					+ ctx.getStart().getLine());
-
-		// translation
-		translation += "// " + ctx.getText() + "\n";
-
-		// TODO semantic analysis on these variables
-		// initialize variables content
-		out = ctx.ID(0).getText();
-		in = ctx.ID(1).getText();
-		attribute = ctx.ID(2).getText();
-
-		// for (int i = 0; i < library.size(); i++) {
-		translation += indentation;
-		translation += "for (int i = 0; i < " + in + ".size(); i++)" + "\n";
-
-		// if (library.get(i). ...
-		translation += indentation + "\t";
-		translation += "if (" + in + ".get(i).";
-	}
-
-	@Override
 	public void enterAttributeSelector(
 			@NotNull JjQueryParser.AttributeSelectorContext ctx) {
-		String attribute = ctx.ID(0).toString();
+		int currentLine = ctx.getStart().getLine();
+
+		String variable = ctx.ID(0).toString();
 		String value = ctx.ID(1).toString();
 
-		rewriteSelector(ctx.OP().getText(), attribute, value);
+		ir.assertExisting(variable, currentLine);
+		ir.assertVisible(variable, currentLine);
+
+		rewriteSelector(ctx.OP().getText(), variable, value);
 	}
 
 	@Override
