@@ -47,7 +47,7 @@ public class Main {
 		file.getParentFile().mkdirs();
 
 		PrintWriter writer = new PrintWriter(OUTPUT, "UTF-8");
-		writer.println(translator.rewriter.getText());
+		writer.print(translator.rewriter.getText());
 		writer.close();
 
 		System.out.println("Translation finished.");

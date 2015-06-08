@@ -1636,20 +1636,8 @@ jQuery
 :
 	JQBegin
 	(
-		in
-		| out
-		| assign
+		assign
 	)* JQEnd
-;
-
-in
-:
-	IN ID SEMICOLON
-;
-
-out
-:
-	OUT ID SEMICOLON
 ;
 
 assign
@@ -1660,5 +1648,17 @@ assign
 
 selector
 :
+	attributeSelector
+	| methodSelector
+;
+
+attributeSelector
+:
 	OPEN_BRACKET ID OP APOSTROPHE ID APOSTROPHE CLOSE_BRACKET
+;
+
+methodSelector
+:
+	OPEN_BRACKET ID OPEN_PARENTHESIS CLOSE_PARENTHESIS OP APOSTROPHE ID APOSTROPHE
+	CLOSE_BRACKET
 ;

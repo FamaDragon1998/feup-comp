@@ -304,6 +304,30 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
+	public void enterMethodSelector(
+			@NotNull JjQueryParser.MethodSelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitMethodSelector(
+			@NotNull JjQueryParser.MethodSelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
 	public void enterUnaryExpression(
 			@NotNull JjQueryParser.UnaryExpressionContext ctx) {
 	}
@@ -1576,6 +1600,30 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	@Override
 	public void exitMethodDeclarator(
 			@NotNull JjQueryParser.MethodDeclaratorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void enterAttributeSelector(
+			@NotNull JjQueryParser.AttributeSelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitAttributeSelector(
+			@NotNull JjQueryParser.AttributeSelectorContext ctx) {
 	}
 
 	/**
@@ -3490,28 +3538,6 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
-	public void enterIn(@NotNull JjQueryParser.InContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void exitIn(@NotNull JjQueryParser.InContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
 	public void enterFieldAccess_lf_primary(
 			@NotNull JjQueryParser.FieldAccess_lf_primaryContext ctx) {
 	}
@@ -3826,28 +3852,6 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	@Override
 	public void exitConstructorBody(
 			@NotNull JjQueryParser.ConstructorBodyContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void enterOut(@NotNull JjQueryParser.OutContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void exitOut(@NotNull JjQueryParser.OutContext ctx) {
 	}
 
 	/**

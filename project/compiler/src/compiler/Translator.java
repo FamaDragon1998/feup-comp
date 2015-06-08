@@ -1,9 +1,14 @@
 package compiler;
 
+import ir.IntermediateRepresentation;
+
 import java.util.List;
 
 import grammar.JjQueryLexer;
 import grammar.JjQueryParser;
+import grammar.JjQueryParser.FieldModifierContext;
+import grammar.JjQueryParser.VariableDeclaratorContext;
+import grammar.JjQueryParser.VariableDeclaratorListContext;
 import grammar.JjQueryParserBaseListener;
 
 import org.antlr.v4.runtime.BufferedTokenStream;
@@ -15,11 +20,34 @@ public class Translator extends JjQueryParserBaseListener {
 
 	BufferedTokenStream tokens;
 	TokenStreamRewriter rewriter;
+	IntermediateRepresentation ir;
 
 	public Translator(BufferedTokenStream tokens) {
 		this.tokens = tokens;
 		rewriter = new TokenStreamRewriter(tokens);
+		ir = new IntermediateRepresentation();
 	}
+
+	@Override
+	public void enterFieldDeclaration(
+			@NotNull JjQueryParser.FieldDeclarationContext ctx) {
+		System.out.println("DBG: " + ctx.getText());
+
+		for (FieldModifierContext fmc : ctx.fieldModifier())
+			System.out.println("MODIFIER: " + fmc.getText());
+
+		System.out.println("TYPE: " + ctx.unannType().getText());
+
+		VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
+		for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
+			System.out.println("VAR: " + vdc.getText());
+
+		System.out.println();
+	}
+
+	//
+	// --- JQUERY ---
+	//
 
 	@Override
 	public void enterJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
@@ -81,32 +109,48 @@ public class Translator extends JjQueryParserBaseListener {
 	}
 
 	@Override
-	public void enterSelector(@NotNull JjQueryParser.SelectorContext ctx) {
-		String attr = ctx.ID(0).toString();
-		String substr = ctx.ID(1).toString();
+	public void enterAttributeSelector(
+			@NotNull JjQueryParser.AttributeSelectorContext ctx) {
+		String attribute = ctx.ID(0).toString();
+		String value = ctx.ID(1).toString();
 
-		switch (ctx.OP().getText()) {
+		rewriteSelector(ctx.OP().getText(), attribute, value);
+	}
+
+	@Override
+	public void enterMethodSelector(
+			@NotNull JjQueryParser.MethodSelectorContext ctx) {
+		String method = ctx.ID(0).toString() + "()";
+		String value = ctx.ID(1).toString();
+
+		rewriteSelector(ctx.OP().getText(), method, value);
+	}
+
+	private void rewriteSelector(String operator, String attributeOrMethod,
+			String returnValue) {
+		switch (operator) {
 		// Selects elements that have the specified attribute with a value
 		// containing a given substring.
 		case "*=":
 			// ... title.toLowerCase().contains("compiler") ...
-			translation += attr + ".toLowerCase().contains(\""
-					+ substr.toLowerCase() + "\")";
+			translation += attributeOrMethod + ".toLowerCase().contains(\""
+					+ returnValue.toLowerCase() + "\")";
 			break;
 
 		// Selects elements that have the specified attribute with a value
 		// ending exactly with a given string. The comparison is case sensitive.
 		case "$=":
 			// ... title.endsWith("compiler") ...
-			translation += attr + ".endsWith(\"" + substr + "\")";
+			translation += attributeOrMethod + ".endsWith(\"" + returnValue
+					+ "\")";
 			break;
 
 		// Selects elements that have the specified attribute with a value
 		// exactly equal to a certain value.
 		case "=":
 			// ... title.toLowerCase().equals("compiler") ...
-			translation += attr + ".toLowerCase().equals(\""
-					+ substr.toLowerCase() + "\")";
+			translation += attributeOrMethod + ".toLowerCase().equals(\""
+					+ returnValue.toLowerCase() + "\")";
 			break;
 
 		// Select elements that either don’t have the specified attribute, or do
@@ -118,8 +162,8 @@ public class Translator extends JjQueryParserBaseListener {
 		// beginning exactly with a given string.
 		case "^=":
 			// ... title.toLowerCase().startsWith("compiler") ...
-			translation += attr + ".toLowerCase().startsWith(\""
-					+ substr.toLowerCase() + "\")";
+			translation += attributeOrMethod + ".toLowerCase().startsWith(\""
+					+ returnValue.toLowerCase() + "\")";
 			break;
 
 		default:

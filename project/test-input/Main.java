@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class Book {
 
-	public String isbn, title;
+	private String isbn, title;
 
 	public Book(String isbn, String title) {
 		this.isbn = isbn;
@@ -44,7 +44,7 @@ public class Main {
 		ArrayList<String> selected = new ArrayList<String>();
 
 		/*@jQ
-		selected = $("library[title*='comp'] isbn");
+		selected = $("library[getTitle()*='comp'] isbn");
 		*/
 
 		System.out.println("Selected:");

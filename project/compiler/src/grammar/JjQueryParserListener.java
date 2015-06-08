@@ -238,6 +238,22 @@ public interface JjQueryParserListener extends ParseTreeListener {
 			@NotNull JjQueryParser.PrimaryNoNewArray_lf_primary_lfno_arrayAccess_lf_primaryContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link JjQueryParser#methodSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void enterMethodSelector(@NotNull JjQueryParser.MethodSelectorContext ctx);
+
+	/**
+	 * Exit a parse tree produced by {@link JjQueryParser#methodSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void exitMethodSelector(@NotNull JjQueryParser.MethodSelectorContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#unaryExpression}.
 	 * 
 	 * @param ctx
@@ -1204,6 +1220,24 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	 *            the parse tree
 	 */
 	void exitMethodDeclarator(@NotNull JjQueryParser.MethodDeclaratorContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link JjQueryParser#attributeSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void enterAttributeSelector(
+			@NotNull JjQueryParser.AttributeSelectorContext ctx);
+
+	/**
+	 * Exit a parse tree produced by {@link JjQueryParser#attributeSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void exitAttributeSelector(
+			@NotNull JjQueryParser.AttributeSelectorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by
@@ -2646,22 +2680,6 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	void exitShiftExpression(@NotNull JjQueryParser.ShiftExpressionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link JjQueryParser#in}.
-	 * 
-	 * @param ctx
-	 *            the parse tree
-	 */
-	void enterIn(@NotNull JjQueryParser.InContext ctx);
-
-	/**
-	 * Exit a parse tree produced by {@link JjQueryParser#in}.
-	 * 
-	 * @param ctx
-	 *            the parse tree
-	 */
-	void exitIn(@NotNull JjQueryParser.InContext ctx);
-
-	/**
 	 * Enter a parse tree produced by
 	 * {@link JjQueryParser#fieldAccess_lf_primary}.
 	 * 
@@ -2900,22 +2918,6 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	 *            the parse tree
 	 */
 	void exitConstructorBody(@NotNull JjQueryParser.ConstructorBodyContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link JjQueryParser#out}.
-	 * 
-	 * @param ctx
-	 *            the parse tree
-	 */
-	void enterOut(@NotNull JjQueryParser.OutContext ctx);
-
-	/**
-	 * Exit a parse tree produced by {@link JjQueryParser#out}.
-	 * 
-	 * @param ctx
-	 *            the parse tree
-	 */
-	void exitOut(@NotNull JjQueryParser.OutContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#catchClause}.
