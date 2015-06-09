@@ -33,12 +33,15 @@ public class Translator extends JjQueryParserBaseListener {
 	@Override
 	public void enterFieldDeclaration(
 			@NotNull JjQueryParser.FieldDeclarationContext ctx) {
+		// save modifiers as Strings to an array
 		ArrayList<String> modifiers = new ArrayList<String>();
 		for (FieldModifierContext fmc : ctx.fieldModifier())
 			modifiers.add(fmc.getText());
 
+		// save field type as a String as well
 		String type = ctx.unannType().getText();
 
+		// add each field to the intermediate representation
 		VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
 		for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
 			ir.addField(modifiers, type, vdc.getText());
@@ -58,7 +61,7 @@ public class Translator extends JjQueryParserBaseListener {
 		rewriter.replace(ctx.getStop(), "// --- END --- jQuery block");
 	}
 
-	private String indentation, translation, in, out, attribute;
+	private String indentation, translation, out, in, attribute;
 
 	@Override
 	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
@@ -77,9 +80,6 @@ public class Translator extends JjQueryParserBaseListener {
 		out = ctx.ID(0).getText();
 		in = ctx.ID(1).getText();
 		attribute = ctx.ID(2).getText();
-
-		ir.assertExisting(attribute, currentLine);
-		ir.assertVisible(attribute, currentLine);
 
 		// for (int i = 0; i < library.size(); i++) {
 		translation += indentation;
@@ -180,6 +180,11 @@ public class Translator extends JjQueryParserBaseListener {
 
 	@Override
 	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
+		int currentLine = ctx.getStart().getLine();
+
+		ir.assertExisting(attribute, currentLine);
+		ir.assertVisible(attribute, currentLine);
+
 		// ... )
 		translation += ")" + "\n";
 

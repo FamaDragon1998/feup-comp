@@ -12,6 +12,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import utils.Log;
+
 public class Main {
 
 	private static final String INPUT = "../test-input/Main.java";
@@ -50,7 +52,8 @@ public class Main {
 		writer.print(translator.rewriter.getText());
 		writer.close();
 
-		System.out.println("Translation finished.");
+		Log.info("Translation finished.");
+		Log.printStats();
 	}
 
 }
