@@ -44,7 +44,7 @@ public class Main {
 		ArrayList<String> selected = new ArrayList<String>();
 
 		/*@jQ
-		selected = $("library[getTitle()*='comp'] isbn");
+		selected = $("library[getTitle()*='comp']");
 		*/
 
 		System.out.println("Selected:");

@@ -15,6 +15,7 @@ import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStreamRewriter;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import utils.Log;
 
@@ -61,7 +62,7 @@ public class Translator extends JjQueryParserBaseListener {
 		rewriter.replace(ctx.getStop(), "// --- END --- jQuery block");
 	}
 
-	private String indentation, translation, out, in, attribute;
+	private String indentation, translation, out, in, fieldOrMethod, value;
 
 	@Override
 	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
@@ -77,17 +78,7 @@ public class Translator extends JjQueryParserBaseListener {
 		translation += "// " + ctx.getText() + "\n";
 
 		// initialize variables content
-		out = ctx.ID(0).getText();
-		in = ctx.ID(1).getText();
-		attribute = ctx.ID(2).getText();
-
-		// for (int i = 0; i < library.size(); i++) {
-		translation += indentation;
-		translation += "for (int i = 0; i < " + in + ".size(); i++)" + "\n";
-
-		// if (library.get(i). ...
-		translation += indentation + "\t";
-		translation += "if (" + in + ".get(i).";
+		out = ctx.ID().getText();
 	}
 
 	private void initIndentationAndTranslation(JjQueryParser.AssignContext ctx) {
@@ -111,53 +102,68 @@ public class Translator extends JjQueryParserBaseListener {
 	}
 
 	@Override
-	public void enterAttributeSelector(
-			@NotNull JjQueryParser.AttributeSelectorContext ctx) {
-		int currentLine = ctx.getStart().getLine();
-
-		String variable = ctx.ID(0).toString();
-		String value = ctx.ID(1).toString();
-
-		ir.assertExisting(variable, currentLine);
-		ir.assertVisible(variable, currentLine);
-
-		rewriteSelector(ctx.OP().getText(), variable, value);
+	public void enterCollectionFieldSelector(
+			@NotNull JjQueryParser.CollectionFieldSelectorContext ctx) {
+		validateAndRewriteSelector(ctx.getStart().getLine(), ctx.ID(), false,
+				ctx.OP().getText());
 	}
 
 	@Override
-	public void enterMethodSelector(
-			@NotNull JjQueryParser.MethodSelectorContext ctx) {
-		String method = ctx.ID(0).toString() + "()";
-		String value = ctx.ID(1).toString();
-
-		rewriteSelector(ctx.OP().getText(), method, value);
+	public void enterCollectionMethodSelector(
+			@NotNull JjQueryParser.CollectionMethodSelectorContext ctx) {
+		validateAndRewriteSelector(ctx.getStart().getLine(), ctx.ID(), true,
+				ctx.OP().getText());
 	}
 
-	private void rewriteSelector(String operator, String attributeOrMethod,
-			String returnValue) {
+	private void validateAndRewriteSelector(int line, List<TerminalNode> id,
+			boolean isMethod, String operator) {
+		in = id.get(0).getText();
+		ir.assertVariable(in, line);
+		ir.assertVisible(in, line);
+
+		fieldOrMethod = id.get(1).getText() + (isMethod ? "()" : "");
+		if (isMethod)
+			ir.assertMethod(fieldOrMethod, line);
+		else
+			ir.assertVariable(fieldOrMethod, line);
+		ir.assertVisible(fieldOrMethod, line);
+
+		value = id.get(2).getText();
+
+		rewriteSelector(operator);
+	}
+
+	private void rewriteSelector(String operator) {
+		// for (int i = 0; i < library.size(); i++) {
+		translation += indentation;
+		translation += "for (int i = 0; i < " + in + ".size(); i++)" + "\n";
+
+		// if (library.get(i). ...
+		translation += indentation + "\t";
+		translation += "if (" + in + ".get(i).";
+
 		switch (operator) {
 		// Selects elements that have the specified attribute with a value
 		// containing a given substring.
 		case "*=":
 			// ... title.toLowerCase().contains("compiler") ...
-			translation += attributeOrMethod + ".toLowerCase().contains(\""
-					+ returnValue.toLowerCase() + "\")";
+			translation += fieldOrMethod + ".toLowerCase().contains(\""
+					+ value.toLowerCase() + "\")";
 			break;
 
 		// Selects elements that have the specified attribute with a value
 		// ending exactly with a given string. The comparison is case sensitive.
 		case "$=":
 			// ... title.endsWith("compiler") ...
-			translation += attributeOrMethod + ".endsWith(\"" + returnValue
-					+ "\")";
+			translation += fieldOrMethod + ".endsWith(\"" + value + "\")";
 			break;
 
 		// Selects elements that have the specified attribute with a value
 		// exactly equal to a certain value.
 		case "=":
 			// ... title.toLowerCase().equals("compiler") ...
-			translation += attributeOrMethod + ".toLowerCase().equals(\""
-					+ returnValue.toLowerCase() + "\")";
+			translation += fieldOrMethod + ".toLowerCase().equals(\""
+					+ value.toLowerCase() + "\")";
 			break;
 
 		// Select elements that either don’t have the specified attribute, or do
@@ -169,29 +175,24 @@ public class Translator extends JjQueryParserBaseListener {
 		// beginning exactly with a given string.
 		case "^=":
 			// ... title.toLowerCase().startsWith("compiler") ...
-			translation += attributeOrMethod + ".toLowerCase().startsWith(\""
-					+ returnValue.toLowerCase() + "\")";
+			translation += fieldOrMethod + ".toLowerCase().startsWith(\""
+					+ value.toLowerCase() + "\")";
 			break;
 
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
-		int currentLine = ctx.getStart().getLine();
-
-		ir.assertExisting(attribute, currentLine);
-		ir.assertVisible(attribute, currentLine);
 
 		// ... )
 		translation += ")" + "\n";
 
-		// selected.add(library.get(i).isbn);
+		// selected.add(library.get(i));
 		translation += indentation + "\t\t";
-		translation += out + ".add(" + in + ".get(i)." + attribute + ");";
+		translation += out + ".add(" + in + ".get(i));";
+	}
 
+	@Override
+	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
 		rewriter.replace(ctx.getStart(), ctx.getStop(), translation);
 	}
 

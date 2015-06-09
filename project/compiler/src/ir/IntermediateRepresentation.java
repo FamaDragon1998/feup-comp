@@ -20,16 +20,22 @@ public class IntermediateRepresentation {
 
 	// assertions
 
-	public void assertExisting(String variable, int currentLine) {
+	public void assertVariable(String variable, int line) {
 		if (!fields.containsKey(variable))
-			Log.error("Unknown attribute '" + variable + "' (line "
-					+ currentLine + ").");
+			Log.error("'" + variable
+					+ "' cannot be resolved to a variable (line " + line + ").");
+	}
+
+	public void assertMethod(String fieldOrMethod, int line) {
+		if (!fields.containsKey(fieldOrMethod))
+			Log.error("The method '" + fieldOrMethod + "' is undefined (line "
+					+ line + ").");
 	}
 
 	public void assertVisible(String attribute, int currentLine) {
 		if (fields.get(attribute) != null)
 			if (fields.get(attribute).getModifiers().contains("private"))
-				Log.error("Attribute '" + attribute + "' is private (line "
+				Log.error("The field '" + attribute + "' is not visible (line "
 						+ currentLine + ").");
 	}
 

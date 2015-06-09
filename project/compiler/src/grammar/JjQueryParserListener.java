@@ -238,20 +238,20 @@ public interface JjQueryParserListener extends ParseTreeListener {
 			@NotNull JjQueryParser.PrimaryNoNewArray_lf_primary_lfno_arrayAccess_lf_primaryContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link JjQueryParser#methodSelector}.
+	 * Enter a parse tree produced by {@link JjQueryParser#fieldSelector}.
 	 * 
 	 * @param ctx
 	 *            the parse tree
 	 */
-	void enterMethodSelector(@NotNull JjQueryParser.MethodSelectorContext ctx);
+	void enterFieldSelector(@NotNull JjQueryParser.FieldSelectorContext ctx);
 
 	/**
-	 * Exit a parse tree produced by {@link JjQueryParser#methodSelector}.
+	 * Exit a parse tree produced by {@link JjQueryParser#fieldSelector}.
 	 * 
 	 * @param ctx
 	 *            the parse tree
 	 */
-	void exitMethodSelector(@NotNull JjQueryParser.MethodSelectorContext ctx);
+	void exitFieldSelector(@NotNull JjQueryParser.FieldSelectorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#unaryExpression}.
@@ -1220,24 +1220,6 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	 *            the parse tree
 	 */
 	void exitMethodDeclarator(@NotNull JjQueryParser.MethodDeclaratorContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link JjQueryParser#attributeSelector}.
-	 * 
-	 * @param ctx
-	 *            the parse tree
-	 */
-	void enterAttributeSelector(
-			@NotNull JjQueryParser.AttributeSelectorContext ctx);
-
-	/**
-	 * Exit a parse tree produced by {@link JjQueryParser#attributeSelector}.
-	 * 
-	 * @param ctx
-	 *            the parse tree
-	 */
-	void exitAttributeSelector(
-			@NotNull JjQueryParser.AttributeSelectorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by
@@ -2872,6 +2854,26 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	void exitClassModifier(@NotNull JjQueryParser.ClassModifierContext ctx);
 
 	/**
+	 * Enter a parse tree produced by
+	 * {@link JjQueryParser#collectionMethodSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void enterCollectionMethodSelector(
+			@NotNull JjQueryParser.CollectionMethodSelectorContext ctx);
+
+	/**
+	 * Exit a parse tree produced by
+	 * {@link JjQueryParser#collectionMethodSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void exitCollectionMethodSelector(
+			@NotNull JjQueryParser.CollectionMethodSelectorContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#fieldAccess}.
 	 * 
 	 * @param ctx
@@ -3103,6 +3105,26 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	 */
 	void exitConstantExpression(
 			@NotNull JjQueryParser.ConstantExpressionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by
+	 * {@link JjQueryParser#collectionAttributeSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void enterCollectionFieldSelector(
+			@NotNull JjQueryParser.CollectionFieldSelectorContext ctx);
+
+	/**
+	 * Exit a parse tree produced by
+	 * {@link JjQueryParser#collectionAttributeSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void exitCollectionAttributeSelector(
+			@NotNull JjQueryParser.CollectionFieldSelectorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#forStatement}.
@@ -3741,6 +3763,22 @@ public interface JjQueryParserListener extends ParseTreeListener {
 	 *            the parse tree
 	 */
 	void exitTryStatement(@NotNull JjQueryParser.TryStatementContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link JjQueryParser#allSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void enterAllSelector(@NotNull JjQueryParser.AllSelectorContext ctx);
+
+	/**
+	 * Exit a parse tree produced by {@link JjQueryParser#allSelector}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 */
+	void exitAllSelector(@NotNull JjQueryParser.AllSelectorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link JjQueryParser#elementValueList}.

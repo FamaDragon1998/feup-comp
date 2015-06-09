@@ -304,8 +304,8 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
-	public void enterMethodSelector(
-			@NotNull JjQueryParser.MethodSelectorContext ctx) {
+	public void enterFieldSelector(
+			@NotNull JjQueryParser.FieldSelectorContext ctx) {
 	}
 
 	/**
@@ -316,8 +316,8 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
-	public void exitMethodSelector(
-			@NotNull JjQueryParser.MethodSelectorContext ctx) {
+	public void exitFieldSelector(
+			@NotNull JjQueryParser.FieldSelectorContext ctx) {
 	}
 
 	/**
@@ -1600,30 +1600,6 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	@Override
 	public void exitMethodDeclarator(
 			@NotNull JjQueryParser.MethodDeclaratorContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void enterAttributeSelector(
-			@NotNull JjQueryParser.AttributeSelectorContext ctx) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>
-	 * The default implementation does nothing.
-	 * </p>
-	 */
-	@Override
-	public void exitAttributeSelector(
-			@NotNull JjQueryParser.AttributeSelectorContext ctx) {
 	}
 
 	/**
@@ -3794,6 +3770,30 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 * </p>
 	 */
 	@Override
+	public void enterCollectionMethodSelector(
+			@NotNull JjQueryParser.CollectionMethodSelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitCollectionMethodSelector(
+			@NotNull JjQueryParser.CollectionMethodSelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
 	public void enterFieldAccess(@NotNull JjQueryParser.FieldAccessContext ctx) {
 	}
 
@@ -4088,6 +4088,30 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	@Override
 	public void exitConstantExpression(
 			@NotNull JjQueryParser.ConstantExpressionContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void enterCollectionFieldSelector(
+			@NotNull JjQueryParser.CollectionFieldSelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitCollectionAttributeSelector(
+			@NotNull JjQueryParser.CollectionFieldSelectorContext ctx) {
 	}
 
 	/**
@@ -4912,6 +4936,28 @@ public class JjQueryParserBaseListener implements JjQueryParserListener {
 	 */
 	@Override
 	public void exitTryStatement(@NotNull JjQueryParser.TryStatementContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void enterAllSelector(@NotNull JjQueryParser.AllSelectorContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * The default implementation does nothing.
+	 * </p>
+	 */
+	@Override
+	public void exitAllSelector(@NotNull JjQueryParser.AllSelectorContext ctx) {
 	}
 
 	/**

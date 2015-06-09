@@ -1654,7 +1654,7 @@ selector
 :
 	allSelector
 	| fieldSelector
-	| collectionAttributeSelector
+	| collectionFieldSelector
 	| collectionMethodSelector
 	/*
 	| descendantSelector
@@ -1673,7 +1673,7 @@ fieldSelector
 	ID
 ;
 
-collectionAttributeSelector
+collectionFieldSelector
 :
 	ID OPEN_BRACKET ID OP APOSTROPHE ID APOSTROPHE CLOSE_BRACKET
 ;
