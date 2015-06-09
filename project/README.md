@@ -7,9 +7,9 @@
 **Project:** JjQuery
 
 **Group members:**
-- [Henrique Ferrolho](github.com/ferrolho)
-- [João Pereira](github.com/jfpereira)
-- [Rafaela Faria](github.com/rafikii)
+- [Henrique Ferrolho](https://github.com/ferrolho)
+- [João Pereira](https://github.com/jfpereira)
+- [Rafaela Faria](https://github.com/rafikii)
 
 ## Build instructions
 
