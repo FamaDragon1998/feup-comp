@@ -8,7 +8,7 @@
 
 **Group members:**
 - [Henrique Ferrolho](https://github.com/ferrolho)
-- [João Pereira](https://github.com/jfpereira)
+- [João Pereira](https://github.com/jfpereira)(ei12023@fe.up.pt)
 - [Rafaela Faria](https://github.com/rafikii)
 
 ## Build instructions
