@@ -16,43 +16,52 @@ import utils.Log;
 
 public class Main {
 
-	private static final String INPUT = "../test-input/Main.java";
-	private static final String OUTPUT = "test/Main.java";
+	private static String inputFile;
+	private static String outputFile;
 
 	public static void main(String[] args) throws Exception {
-		FileInputStream stream = new FileInputStream(INPUT);
-		ANTLRInputStream input = new ANTLRInputStream(stream);
+		if (args.length != 2)
+			Log.error("Usage: Main.jar <input file> <output file>");
+		else {
+			inputFile = args[0];
+			outputFile = args[1];
 
-		// create a lexer that feeds off of input CharStream
-		JjQueryLexer lexer = new JjQueryLexer(input);
+			FileInputStream stream = new FileInputStream(inputFile);
+			ANTLRInputStream input = new ANTLRInputStream(stream);
 
-		// create a buffer of tokens pulled from the lexer
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
+			// create a lexer that feeds off of input CharStream
+			JjQueryLexer lexer = new JjQueryLexer(input);
 
-		// create a parser that feeds off the tokens buffer
-		JjQueryParser parser = new JjQueryParser(tokens);
+			// create a buffer of tokens pulled from the lexer
+			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		ParseTree tree = parser.compilationUnit(); // begin parsing at init rule
+			// create a parser that feeds off the tokens buffer
+			JjQueryParser parser = new JjQueryParser(tokens);
 
-		// System.out.println(tree.toStringTree(parser)); // print tree
+			ParseTree tree = parser.compilationUnit(); // begin parsing at init
+														// rule
 
-		// Create a generic parse tree walker that can trigger callbacks
-		ParseTreeWalker walker = new ParseTreeWalker();
+			// System.out.println(tree.toStringTree(parser)); // print tree
 
-		Translator translator = new Translator(tokens);
+			// Create a generic parse tree walker that can trigger callbacks
+			ParseTreeWalker walker = new ParseTreeWalker();
 
-		// Walk the tree created during the parse, trigger callbacks
-		walker.walk(translator, tree);
+			Translator translator = new Translator(tokens);
 
-		// create output folder if it does not exist
-		File file = new File(OUTPUT);
-		file.getParentFile().mkdirs();
+			// Walk the tree created during the parse, trigger callbacks
+			walker.walk(translator, tree);
 
-		PrintWriter writer = new PrintWriter(OUTPUT, "UTF-8");
-		writer.print(translator.rewriter.getText());
-		writer.close();
+			// create output folder if it does not exist
+			File file = new File(outputFile);
+			file.getParentFile().mkdirs();
 
-		Log.info("Translation finished");
+			PrintWriter writer = new PrintWriter(outputFile, "UTF-8");
+			writer.print(translator.rewriter.getText());
+			writer.close();
+
+			Log.info("Translation finished");
+		}
+
 		Log.printStats();
 	}
 

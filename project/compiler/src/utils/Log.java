@@ -2,7 +2,7 @@ package utils;
 
 public class Log {
 
-	private static boolean LOGGING_INFOS = true;
+	private static boolean LOGGING_INFOS = false;
 	private static boolean LOGGING_ERRORS = true;
 
 	private static int numWarnings;
