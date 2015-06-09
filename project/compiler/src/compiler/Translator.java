@@ -195,14 +195,14 @@ public class Translator extends JjQueryParserBaseListener {
 		case "*=":
 			// ... title.toLowerCase().contains("compiler") ...
 			translation += fieldOrMethod + ".toLowerCase().contains(\""
-					+ value.toLowerCase() + "\")";
+					+ value.toLowerCase() + "\"))\n";
 			break;
 
 		// Selects elements that have the specified attribute with a value
 		// ending exactly with a given string. The comparison is case sensitive.
 		case "$=":
 			// ... title.endsWith("compiler") ...
-			translation += fieldOrMethod + ".endsWith(\"" + value + "\")";
+			translation += fieldOrMethod + ".endsWith(\"" + value + "\"))\n";
 			break;
 
 		// Selects elements that have the specified attribute with a value
@@ -210,12 +210,27 @@ public class Translator extends JjQueryParserBaseListener {
 		case "=":
 			// ... title.toLowerCase().equals("compiler") ...
 			translation += fieldOrMethod + ".toLowerCase().equals(\""
-					+ value.toLowerCase() + "\")";
+					+ value.toLowerCase() + "\"))\n";
 			break;
 
 		// Select elements that either don’t have the specified attribute, or do
 		// have the specified attribute but not with a certain value.
 		case "!=":
+			// ... title != null) {
+			translation += fieldOrMethod + " != null) {\n";
+
+			// ... if(!library.get(i).title.equals("comp"))
+			translation += indentation + "\t\t";
+			translation += "if(!" + in + ".get(i)." + fieldOrMethod + ".equals(\"" + value + "\"))\n";
+
+			// ... selected.add(library.get(i));
+			translation += indentation + "\t\t\t";
+			translation += out + ".add(" + in + ".get(i));\n";
+
+			// ... } else
+			translation += indentation + "\t";
+			translation += "} else\n";
+
 			break;
 
 		// Selects elements that have the specified attribute with a value
@@ -223,15 +238,12 @@ public class Translator extends JjQueryParserBaseListener {
 		case "^=":
 			// ... title.toLowerCase().startsWith("compiler") ...
 			translation += fieldOrMethod + ".toLowerCase().startsWith(\""
-					+ value.toLowerCase() + "\")";
+					+ value.toLowerCase() + "\"))\n";
 			break;
 
 		default:
 			break;
 		}
-
-		// ... )
-		translation += ")" + "\n";
 
 		// selected.add(library.get(i));
 		translation += indentation + "\t\t";
