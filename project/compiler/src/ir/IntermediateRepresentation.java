@@ -38,7 +38,7 @@ public class IntermediateRepresentation {
 	}
 
 	public void addLocalVariable(String type, String name) {
-		locals.put(type, new LocalVariable(type, name));
+		locals.put(name, new LocalVariable(type, name));
 	}
 
 	// assertions

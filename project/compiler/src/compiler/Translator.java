@@ -241,9 +241,10 @@ public class Translator extends JjQueryParserBaseListener {
 			// ... title != null) {
 			translation += fieldOrMethod + " != null) {\n";
 
-			// ... if(!library.get(i).title.equals("comp"))
+			// ... if (!library.get(i).title.equals("comp"))
 			translation += indentation + "\t\t";
-			translation += "if(!" + in + ".get(i)." + fieldOrMethod + ".equals(\"" + value + "\"))\n";
+			translation += "if (!" + in + ".get(i)." + fieldOrMethod
+					+ ".equals(\"" + value + "\"))\n";
 
 			// ... selected.add(library.get(i));
 			translation += indentation + "\t\t\t";
