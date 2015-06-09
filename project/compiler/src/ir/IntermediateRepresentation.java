@@ -36,32 +36,34 @@ public class IntermediateRepresentation {
 
 	// assertions
 
-	public void assertField(String variable, int line) {
+	public void assertField(String variable) {
 		if (!fields.containsKey(variable))
 			Log.error("'" + variable
-					+ "' cannot be resolved to a variable (line " + line + ").");
+					+ "' cannot be resolved to a variable (line "
+					+ translator.currentLine + ").");
 	}
 
-	public void assertVisibleField(String field, int line) {
+	public void assertVisibleField(String field) {
 		if (fields.get(field) != null)
 			if (!fields.get(field).getClassScope()
 					.equals(translator.currentClass))
 				if (fields.get(field).getModifiers().contains("private"))
 					Log.error("The field '" + field + "' is not visible (line "
-							+ line + ").");
+							+ translator.currentLine + ").");
 	}
 
-	public void assertMethod(String fieldOrMethod, int line) {
+	public void assertMethod(String fieldOrMethod) {
 		if (!methods.containsKey(fieldOrMethod))
 			Log.error("The method '" + fieldOrMethod + "' is undefined (line "
-					+ line + ").");
+					+ translator.currentLine + ").");
 	}
 
-	public void assertVisibleMethod(String attribute, int line) {
+	public void assertVisibleMethod(String attribute) {
 		if (methods.get(attribute) != null)
 			if (methods.get(attribute).getModifiers().contains("private"))
 				Log.error("The method '" + attribute
-						+ "' is not visible (line " + line + ").");
+						+ "' is not visible (line " + translator.currentLine
+						+ ").");
 	}
 
 }
