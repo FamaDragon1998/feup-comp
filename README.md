@@ -8,12 +8,17 @@
 
 **Group members:**
 - [Henrique Ferrolho](https://github.com/ferrolho)
-- [João Pereira](https://github.com/jfpereira)(ei12023@fe.up.pt)
+- [João Pereira](https://github.com/jfpereira)
 - [Rafaela Faria](https://github.com/rafikii)
 
 ## Build instructions
 
-como é possível recompilar depois de realizar alterações ao código-fonte? Se tiver sido usado um IDE, devem indicar os passos para instalação, uso de potenciais plugins necessários, e incluir indicações sobre como abrir e compilar o projeto. (será aconselhável testar todos os passos num outro computador, ou numa máquina virtual, de forma a que as instruções sejam completas)
+The project was developed using *Eclipse Luna*, with the *ANTLR v4* plugin.  
+In order to install the plugin go to **Help > Eclipse Marketplace...**, search for `antlr` and install the plugin.
+
+![image](readme-res/eclipse-plugin.png)
+
+In order to recompile the project, one must first import it by going to **File > Import...**, and then browse and select the **compiler** project folder, or the **grammar** project folder. The first folder contains the whole project. The second contains the *JjQueryLexer.g4* and *JjQueryParser.g4*, which are the source files responsible of generating the project grammar.
 
 ## Examples
 
