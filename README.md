@@ -61,5 +61,5 @@ descrever os principais aspetos negativos relativos à ferramenta implementada (
 
 ## Preview
 
-![image](res/preview_2015-05-10.png)
+![image](readme-res/preview_2015-05-10.png)
 #####Fig. 1: JjQuery translates jQuery code embedded in Java to native Java.
