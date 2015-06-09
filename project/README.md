@@ -2,8 +2,10 @@
 
 ## Authors
 
-**Group name:** G51  
-**Project:** JjQuery  
+**Group name:** G51
+
+**Project:** JjQuery
+
 **Group members:**
 - [Henrique Ferrolho](github.com/ferrolho)
 - [João Pereira](github.com/jfpereira)
