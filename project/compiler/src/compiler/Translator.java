@@ -197,6 +197,9 @@ public class Translator extends JjQueryParserBaseListener {
 			ir.assertVisibleField(fieldOrMethod);
 		}
 
+		// same type assertion
+		ir.assertSameType(out, in);
+
 		value = id.get(2).getText();
 
 		rewriteSelector(operator);

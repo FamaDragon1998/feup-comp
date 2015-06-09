@@ -73,4 +73,26 @@ public class IntermediateRepresentation {
 						+ ").");
 	}
 
+	public void assertSameType(String out, String in) {
+		String outType = "", inType = "";
+
+		if (locals.containsKey(out))
+			outType = locals.get(out).type;
+		else if (fields.containsKey(out))
+			outType = fields.get(out).type;
+		else
+			Log.error("Unexpected error while asserting same type of variables");
+
+		if (locals.containsKey(in))
+			inType = locals.get(in).type;
+		else if (fields.containsKey(in))
+			inType = fields.get(in).type;
+		else
+			Log.error("Unexpected error while asserting same type of variables");
+
+		if (!outType.equals(inType))
+			Log.error("Type mismatch: cannot convert from " + inType + " to "
+					+ outType);
+	}
+
 }

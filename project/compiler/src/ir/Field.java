@@ -8,7 +8,7 @@ public class Field {
 
 	private String classScope;
 	private ArrayList<String> modifiers;
-	private String type, name;
+	public String type, name;
 
 	public Field(String classScope, ArrayList<String> modifiers, String type,
 			String name) {
