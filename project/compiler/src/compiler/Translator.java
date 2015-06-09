@@ -100,6 +100,23 @@ public class Translator extends JjQueryParserBaseListener {
 				.methodDeclarator().getText());
 	}
 
+	@Override
+	public void enterLocalVariableDeclaration(
+			@NotNull JjQueryParser.LocalVariableDeclarationContext ctx) {
+		String type = ctx.unannType().getText();
+
+		VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
+		for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
+			ir.addLocalVariable(type, vdc.variableDeclaratorId().getText());
+	}
+
+	@Override
+	public void exitMethodDeclaration(
+			@NotNull JjQueryParser.MethodDeclarationContext ctx) {
+		Log.info("Clearing local variables intermediate representation");
+		ir.locals.clear();
+	}
+
 	//
 	// --- JQUERY ---
 	//
@@ -118,7 +135,6 @@ public class Translator extends JjQueryParserBaseListener {
 
 	@Override
 	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
-
 		initIndentationAndTranslation(ctx);
 
 		// semantic analysis
