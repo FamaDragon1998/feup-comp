@@ -922,16 +922,6 @@ JQEnd
 	'*/' -> popMode
 ;
 
-IN
-:
-	'in'
-;
-
-OUT
-:
-	'out'
-;
-
 ID
 :
 	[a-zA-Z_] [a-zA-Z0-9_]*
@@ -986,6 +976,21 @@ OPEN_BRACKET
 CLOSE_BRACKET
 :
 	']'
+;
+
+ALL_SELECTOR
+:
+	'*'
+;
+
+FIRST_SELECTOR
+:
+	':first'
+;
+
+LAST_SELECTOR
+:
+	':last'
 ;
 
 JQUERY_WS

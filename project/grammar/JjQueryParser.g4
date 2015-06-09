@@ -1632,6 +1632,10 @@ castExpression
 	| LPAREN referenceType additionalBound* RPAREN lambdaExpression
 ;
 
+//
+// --- JQUERY ---
+//
+
 jQuery
 :
 	JQBegin
@@ -1642,23 +1646,57 @@ jQuery
 
 assign
 :
-	ID OP DOLLAR OPEN_PARENTHESIS QUOTES ID selector ID QUOTES CLOSE_PARENTHESIS
+	ID OP DOLLAR OPEN_PARENTHESIS QUOTES selector QUOTES CLOSE_PARENTHESIS
 	SEMICOLON
 ;
 
 selector
 :
-	attributeSelector
-	| methodSelector
+	allSelector
+	| fieldSelector
+	| collectionAttributeSelector
+	| collectionMethodSelector
+	/*
+	| descendantSelector
+	| firstSelector
+	| lastSelector
+	*/
 ;
 
-attributeSelector
+allSelector
 :
-	OPEN_BRACKET ID OP APOSTROPHE ID APOSTROPHE CLOSE_BRACKET
+	ALL_SELECTOR
 ;
 
-methodSelector
+fieldSelector
 :
-	OPEN_BRACKET ID OPEN_PARENTHESIS CLOSE_PARENTHESIS OP APOSTROPHE ID APOSTROPHE
-	CLOSE_BRACKET
+	ID
 ;
+
+collectionAttributeSelector
+:
+	ID OPEN_BRACKET ID OP APOSTROPHE ID APOSTROPHE CLOSE_BRACKET
+;
+
+collectionMethodSelector
+:
+	ID OPEN_BRACKET ID OPEN_PARENTHESIS CLOSE_PARENTHESIS OP APOSTROPHE ID
+	APOSTROPHE CLOSE_BRACKET
+;
+
+/*
+descendantSelector
+:
+	selector ID
+;
+
+firstSelector
+:
+	selector FIRST_SELECTOR
+;
+
+lastSelector
+:
+	selector LAST_SELECTOR
+;
+*/
