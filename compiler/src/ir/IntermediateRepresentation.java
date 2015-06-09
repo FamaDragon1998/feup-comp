@@ -80,15 +80,19 @@ public class IntermediateRepresentation {
 			outType = locals.get(out).type;
 		else if (fields.containsKey(out))
 			outType = fields.get(out).type;
-		else
+		else {
 			Log.error("Unexpected error while asserting same type of variables");
+			return;
+		}
 
 		if (locals.containsKey(in))
 			inType = locals.get(in).type;
 		else if (fields.containsKey(in))
 			inType = fields.get(in).type;
-		else
+		else {
 			Log.error("Unexpected error while asserting same type of variables");
+			return;
+		}
 
 		if (!outType.equals(inType))
 			Log.error("Type mismatch: cannot convert from " + inType + " to "
