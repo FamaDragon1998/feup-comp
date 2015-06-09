@@ -6,10 +6,13 @@ import utils.Log;
 
 public class Field {
 
+	private String classScope;
 	private ArrayList<String> modifiers;
 	private String type, name;
 
-	public Field(ArrayList<String> modifiers, String type, String name) {
+	public Field(String classScope, ArrayList<String> modifiers, String type,
+			String name) {
+		this.classScope = classScope;
 		this.modifiers = modifiers;
 		this.type = type;
 		this.name = name;
@@ -17,14 +20,18 @@ public class Field {
 		Log.info("New field created: " + toString());
 	}
 
-	@Override
-	public String toString() {
-		return "Field [modifiers=" + modifiers + ", type=" + type + ", name="
-				+ name + "]";
+	public String getClassScope() {
+		return classScope;
 	}
 
 	public ArrayList<String> getModifiers() {
 		return modifiers;
+	}
+
+	@Override
+	public String toString() {
+		return "Field [classScope=" + classScope + ", modifiers=" + modifiers
+				+ ", type=" + type + ", name=" + name + "]";
 	}
 
 }

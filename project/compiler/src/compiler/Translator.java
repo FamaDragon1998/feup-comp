@@ -3,6 +3,7 @@ package compiler;
 import grammar.JjQueryLexer;
 import grammar.JjQueryParser;
 import grammar.JjQueryParser.FieldModifierContext;
+import grammar.JjQueryParser.MethodModifierContext;
 import grammar.JjQueryParser.VariableDeclaratorContext;
 import grammar.JjQueryParser.VariableDeclaratorListContext;
 import grammar.JjQueryParserBaseListener;
@@ -25,11 +26,39 @@ public class Translator extends JjQueryParserBaseListener {
 	TokenStreamRewriter rewriter;
 	IntermediateRepresentation ir;
 
+	public String currentClass;
+
 	public Translator(BufferedTokenStream tokens) {
 		this.tokens = tokens;
 		rewriter = new TokenStreamRewriter(tokens);
-		ir = new IntermediateRepresentation();
+		ir = new IntermediateRepresentation(this);
+
+		currentClass = "";
 	}
+
+	@Override
+	public void enterNormalClassDeclaration(
+			@NotNull JjQueryParser.NormalClassDeclarationContext ctx) {
+		for (int i = 0; i < ctx.getChildCount(); i++) {
+			if (ctx.getChild(i).getText().equals("class")) {
+				currentClass = ctx.getChild(i + 1).getText();
+				break;
+			}
+		}
+
+		if (currentClass.isEmpty())
+			Log.error("Unexpected error while parsing class name");
+
+		Log.info("Traversing class " + currentClass);
+	}
+
+	@Override
+	public void exitNormalClassDeclaration(
+			@NotNull JjQueryParser.NormalClassDeclarationContext ctx) {
+		currentClass = "";
+	}
+
+	// save fields to IR
 
 	@Override
 	public void enterFieldDeclaration(
@@ -45,7 +74,23 @@ public class Translator extends JjQueryParserBaseListener {
 		// add each field to the intermediate representation
 		VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
 		for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
-			ir.addField(modifiers, type, vdc.getText());
+			ir.addField(currentClass, modifiers, type, vdc.getText());
+	}
+
+	// save methods to IR
+
+	@Override
+	public void enterMethodDeclaration(
+			@NotNull JjQueryParser.MethodDeclarationContext ctx) {
+		// save modifiers as Strings to an array
+		ArrayList<String> modifiers = new ArrayList<String>();
+		for (MethodModifierContext mmc : ctx.methodModifier())
+			modifiers.add(mmc.getText());
+
+		String result = ctx.methodHeader().result().getText();
+
+		ir.addMethod(currentClass, modifiers, result, ctx.methodHeader()
+				.methodDeclarator().getText());
 	}
 
 	//
@@ -118,15 +163,17 @@ public class Translator extends JjQueryParserBaseListener {
 	private void validateAndRewriteSelector(int line, List<TerminalNode> id,
 			boolean isMethod, String operator) {
 		in = id.get(0).getText();
-		ir.assertVariable(in, line);
-		ir.assertVisible(in, line);
+		ir.assertField(in, line);
+		ir.assertVisibleField(in, line);
 
 		fieldOrMethod = id.get(1).getText() + (isMethod ? "()" : "");
-		if (isMethod)
+		if (isMethod) {
 			ir.assertMethod(fieldOrMethod, line);
-		else
-			ir.assertVariable(fieldOrMethod, line);
-		ir.assertVisible(fieldOrMethod, line);
+			ir.assertVisibleMethod(fieldOrMethod, line);
+		} else {
+			ir.assertField(fieldOrMethod, line);
+			ir.assertVisibleField(fieldOrMethod, line);
+		}
 
 		value = id.get(2).getText();
 
