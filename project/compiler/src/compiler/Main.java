@@ -52,7 +52,7 @@ public class Main {
 		writer.print(translator.rewriter.getText());
 		writer.close();
 
-		Log.info("Translation finished.");
+		Log.info("Translation finished");
 		Log.printStats();
 	}
 
