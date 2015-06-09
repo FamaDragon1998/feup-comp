@@ -35,7 +35,18 @@ para cada exemplo, devem indicar o que o exemplo pretende demonstrar e o resulta
 
 ## How to use
 
-Descrição de Utilização: como invocar a ferramenta a partir da linha de comandos (ou como correr, no caso de incluir interface gráfica)? Quais os parâmetros usados? (incluir exemplo de uso se possível) A ferramenta deve imprimir na consola esta informação de uso quando invocada sem argumentos na linha de comandos
+The program can be run through the Terminal using the following command:
+
+`java -jar G51.jar examples/Example1.java Main.java`
+
+The command above will translate the **Example1.java** inside the **examples** folder and output the resulting translation to **Main.java**.
+
+If the program is run without any CLI arguments, the output will be the following:
+```
+$ java -jar G51.jar
+Error: Usage: Main.jar <input file> <output file>
+Errors: 1	Warnings: 0
+```
  
  
 ## Lexical analysis
