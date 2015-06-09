@@ -39,7 +39,7 @@ The program can be run through the Terminal using the following command:
 
 `java -jar G51.jar examples/Example1.java Main.java`
 
-The command above will translate the **Example1.java** inside the **examples** folder and output the resulting translation to **Main.java**.
+The command above will translate the **Example1.java** inside the **examples** folder and output the resultant translation to **Main.java**.
 
 If the program is run without any CLI arguments, the output will be the following:
 ```
