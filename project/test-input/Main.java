@@ -41,7 +41,7 @@ public class Main {
 		System.out.println();
 
 		// selected is ArrayList<String> of ISBNs
-		ArrayList<String> selected = new ArrayList<String>();
+		//ArrayList<String> selected = new ArrayList<String>();
 
 		/*@jQ
 		selected = $("library[getTitle()*='comp']");

@@ -28,6 +28,8 @@ public class Translator extends JjQueryParserBaseListener {
 
 	public String currentClass;
 
+	public int currentLine;
+
 	public Translator(BufferedTokenStream tokens) {
 		this.tokens = tokens;
 		rewriter = new TokenStreamRewriter(tokens);
@@ -35,6 +37,11 @@ public class Translator extends JjQueryParserBaseListener {
 
 		currentClass = "";
 	}
+
+	@Override
+	public void enterEveryRule(org.antlr.v4.runtime.ParserRuleContext ctx) {
+		currentLine = ctx.getStart().getLine();
+	};
 
 	@Override
 	public void enterNormalClassDeclaration(
@@ -111,7 +118,6 @@ public class Translator extends JjQueryParserBaseListener {
 
 	@Override
 	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
-		int currentLine = ctx.getStart().getLine();
 
 		initIndentationAndTranslation(ctx);
 
@@ -124,6 +130,8 @@ public class Translator extends JjQueryParserBaseListener {
 
 		// initialize variables content
 		out = ctx.ID().getText();
+		ir.assertField(out);
+		ir.assertVisibleField(out);
 	}
 
 	private void initIndentationAndTranslation(JjQueryParser.AssignContext ctx) {
@@ -149,30 +157,28 @@ public class Translator extends JjQueryParserBaseListener {
 	@Override
 	public void enterCollectionFieldSelector(
 			@NotNull JjQueryParser.CollectionFieldSelectorContext ctx) {
-		validateAndRewriteSelector(ctx.getStart().getLine(), ctx.ID(), false,
-				ctx.OP().getText());
+		validateAndRewriteSelector(ctx.ID(), false, ctx.OP().getText());
 	}
 
 	@Override
 	public void enterCollectionMethodSelector(
 			@NotNull JjQueryParser.CollectionMethodSelectorContext ctx) {
-		validateAndRewriteSelector(ctx.getStart().getLine(), ctx.ID(), true,
-				ctx.OP().getText());
+		validateAndRewriteSelector(ctx.ID(), true, ctx.OP().getText());
 	}
 
-	private void validateAndRewriteSelector(int line, List<TerminalNode> id,
+	private void validateAndRewriteSelector(List<TerminalNode> id,
 			boolean isMethod, String operator) {
 		in = id.get(0).getText();
-		ir.assertField(in, line);
-		ir.assertVisibleField(in, line);
+		ir.assertField(in);
+		ir.assertVisibleField(in);
 
 		fieldOrMethod = id.get(1).getText() + (isMethod ? "()" : "");
 		if (isMethod) {
-			ir.assertMethod(fieldOrMethod, line);
-			ir.assertVisibleMethod(fieldOrMethod, line);
+			ir.assertMethod(fieldOrMethod);
+			ir.assertVisibleMethod(fieldOrMethod);
 		} else {
-			ir.assertField(fieldOrMethod, line);
-			ir.assertVisibleField(fieldOrMethod, line);
+			ir.assertField(fieldOrMethod);
+			ir.assertVisibleField(fieldOrMethod);
 		}
 
 		value = id.get(2).getText();
