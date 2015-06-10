@@ -97,7 +97,9 @@ line 19:13 missing '$' at '('
 
 ## Semantic analysis
 
-indicar em que ficheiro(s) está especificado o analisador semântico; descrever todas as validações semânticas implementadas (e possíveis construções e consultas de tabelas de símbolos); descrever como lidam com erros semânticos
+The semantic analysis is located in both **compiler/src/compiler/Translator.java** and **compiler/src/ir/IntermediateRepresentation.java**.
+
+descrever todas as validações semânticas implementadas (e possíveis construções e consultas de tabelas de símbolos); descrever como lidam com erros semânticos
 
 
 ## Intermediate representation
