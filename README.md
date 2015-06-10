@@ -151,6 +151,8 @@ descrever a infraestrutura de testes e a bateria de testes utilizados para testa
 
 ## Architecture
 
+<img src="readme-res/architecture-overview.jpg" width="80%" >
+
 descrever a arquitetura geral da plataforma, principais algoritmos utilizados, e outros pontos que considerem relevantes para a avaliação. No caso particular dos trabalhos #1 (JjQuery) e #5 (JTM), devem documentar bem a linguagem de entrada
 
 
