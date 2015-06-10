@@ -99,6 +99,15 @@ Error: Unexpected error while asserting same type of variables
 Errors: 3, Warnings: 0
 ```
 
+#### Example 7
+
+**Valid** example. This is the same as **Example 4**, only with the class **Book** defined *after* the **main** method.  
+This is possible because the **ParseTreeWalker** walks the tree *two* times: the *first* time walks it to build the intermediate representation; the *second* time walks it to rewrite the jQuery code.
+
+```
+Errors: 0, Warnings: 0
+```
+
 
 ## How to use
 
