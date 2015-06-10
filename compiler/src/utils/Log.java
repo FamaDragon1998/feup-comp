@@ -26,7 +26,7 @@ public class Log {
 	}
 
 	public static void printStats() {
-		System.out.println("Errors: " + numErrors + "\tWarnings: "
+		System.out.println("Errors: " + numErrors + ",\tWarnings: "
 				+ numWarnings);
 	}
 

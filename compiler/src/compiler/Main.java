@@ -53,7 +53,8 @@ public class Main {
 
 			// create output folder if it does not exist
 			File file = new File(outputFile);
-			file.getParentFile().mkdirs();
+			if (file.getParentFile() != null)
+				file.getParentFile().mkdirs();
 
 			PrintWriter writer = new PrintWriter(outputFile, "UTF-8");
 			writer.print(translator.rewriter.getText());
