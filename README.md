@@ -99,7 +99,26 @@ line 19:13 missing '$' at '('
 
 The semantic analysis is located in both **compiler/src/compiler/Translator.java** and **compiler/src/ir/IntermediateRepresentation.java**.
 
-descrever todas as validações semânticas implementadas (e possíveis construções e consultas de tabelas de símbolos); descrever como lidam com erros semânticos
+The first semantic analysis implemented was to check that the first **OP** token in the **assign** rule was an `=` and not any of the other possible operators explicit in the **OP** token:
+
+```
+@Override
+public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
+	(...)
+	
+	if (!ctx.OP().getText().equals("="))
+		Log.error("Expecting '=' on assignment, line " + currentLine);
+	
+	(...)
+}
+```
+
+More advanced semantic analysis that make use of the intermediate representation are being made in **IntermediateRepresentation.java**.  
+That class contains methods to validate whether a variable being used in a selector exists, is visible in the scope where it is being used, and also if the type of variable returned by a selector is the same as the type of the variable to which it is being assigned.  
+These validations are made for local variables, class attributes, and also for methods (yes, the program supports the use of both variables and/or methods in a selector).
+
+The validadtions described above are only possible by making use of the **intermediate representation**. Whenever the ANTLR **ParseTreeWalker** walks through a field declaration or a method definition, the program saves the modifiers, the type (or return type, for methods), and the name of that field/method.  
+Afterwards, when the jQuery selector is being analysed, the program checks if the fields/methods being used by it have been previously saved, and if they are visible in that scope.  
 
 
 ## Intermediate representation
