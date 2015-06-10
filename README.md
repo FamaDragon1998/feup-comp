@@ -146,7 +146,7 @@ The final output code is built using the **TokenStreamRewriter**. This ANTLR uti
 
 ## Tests
 
-descrever a infraestrutura de testes e a bateria de testes utilizados para testar a ferramenta desenvolvida (quantidade de testes, automação dos mesmos, etc.)
+The program was tested with all the example inputs mentioned in a section above.
 
 
 ## Architecture
@@ -184,7 +184,7 @@ Why? Since the user did not write the code for those methods, the walker does no
 
 ```
 Error: The method 'toString()' is undefined (line 19).
-Errors: 1	Warnings: 0
+Errors: 1,	Warnings: 0
 ```
 
 #### Future improvements
