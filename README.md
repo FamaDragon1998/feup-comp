@@ -151,9 +151,23 @@ descrever a infraestrutura de testes e a bateria de testes utilizados para testa
 
 ## Architecture
 
-<img src="readme-res/architecture-overview.jpg" width="80%" >
+The image below is an overview of the program's architecture:
 
-descrever a arquitetura geral da plataforma, principais algoritmos utilizados, e outros pontos que considerem relevantes para a avaliação. No caso particular dos trabalhos #1 (JjQuery) e #5 (JTM), devem documentar bem a linguagem de entrada
+![architecture overview](readme-res/architecture-overview.jpg)
+
+#### Supported selectors
+
+Following is an extensive description of the selectors supported by the translator.
+
+###### Attribute selector
+
+`selected = $("collection[attribute operator value]")`
+
+**selected** - the variable used to store the return of the selector  
+**collection** - the collection of elements to be selected/filtered  
+**attribute** - attribute (or method) used to obtain the value to be filtered  
+**operator** - the operator to be applied on the **attribute** with the **value**  
+**value** - the value to be used by the **operator**  
 
 
 ## The good
