@@ -81,6 +81,8 @@ The output can be compiled with **no errors** and runs perfectly fine.
 
 #### Example 5
 
+Example of a type mismatch (assigning something to a variable with a different type).
+
 ```
 Error: Type mismatch: cannot convert from ArrayList<Book> to ArrayList<String> (line 33)
 Errors: 1, Warnings: 0
@@ -88,7 +90,13 @@ Errors: 1, Warnings: 0
 
 #### Example 6
 
+Example with multiple errors.
+
 ```
+Error: 'dummy' cannot be resolved to a variable (line 33)
+Error: The field 'title' is not visible (line 33)
+Error: Unexpected error while asserting same type of variables
+Errors: 3, Warnings: 0
 ```
 
 
