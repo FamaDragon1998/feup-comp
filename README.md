@@ -117,8 +117,8 @@ More advanced semantic analysis that make use of the intermediate representation
 That class contains methods to validate whether a variable being used in a selector exists, is visible in the scope where it is being used, and also if the type of variable returned by a selector is the same as the type of the variable to which it is being assigned.  
 These validations are made for local variables, class attributes, and also for methods (yes, the program supports the use of both variables and/or methods in a selector).
 
-The validadtions described above are only possible by making use of the **intermediate representation**. Whenever the ANTLR **ParseTreeWalker** walks through a field declaration or a method definition, the program saves the modifiers, the type (or return type, for methods), and the name of that field/method.  
-Afterwards, when the jQuery selector is being analysed, the program checks if the fields/methods being used by it have been previously saved, and if they are visible in that scope.  
+The validations described above are only possible by making use of the **intermediate representation**.  
+Whenever the ANTLR **ParseTreeWalker** walks through a field declaration or a method definition, the program saves the modifiers, the type (or return type, for methods), and the name of that field/method. Afterwards, when the jQuery selector is being analysed, the program checks if the fields/methods being used by it have been previously saved, and if they are visible in that scope.  
 
 
 ## Intermediate representation
