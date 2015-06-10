@@ -1652,15 +1652,13 @@ assign
 
 selector
 :
-	allSelector
+	( allSelector
 	| fieldSelector
 	| collectionFieldSelector
 	| collectionMethodSelector
-	/*
-	| descendantSelector
 	| firstSelector
 	| lastSelector
-	*/
+	| descendantSelector ) (ID)?
 ;
 
 allSelector
@@ -1684,19 +1682,23 @@ collectionMethodSelector
 	APOSTROPHE CLOSE_BRACKET
 ;
 
-/*
-descendantSelector
-:
-	selector ID
-;
-
 firstSelector
 :
-	selector FIRST_SELECTOR
+	(collectionFieldSelector
+	| fieldSelector
+	| collectionMethodSelector)	FIRST_SELECTOR
 ;
 
 lastSelector
 :
-	selector LAST_SELECTOR
+	(collectionFieldSelector
+	| fieldSelector
+	| collectionMethodSelector) LAST_SELECTOR
 ;
-*/
+
+descendantSelector
+:
+	fieldSelector+
+;
+
+
