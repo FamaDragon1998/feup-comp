@@ -22,6 +22,8 @@ import utils.Log;
 
 public class Translator extends JjQueryParserBaseListener {
 
+	boolean buildingIntermediateRepresentation;
+
 	BufferedTokenStream tokens;
 	TokenStreamRewriter rewriter;
 	IntermediateRepresentation ir;
@@ -31,6 +33,8 @@ public class Translator extends JjQueryParserBaseListener {
 	public int currentLine;
 
 	public Translator(BufferedTokenStream tokens) {
+		buildingIntermediateRepresentation = true;
+
 		this.tokens = tokens;
 		rewriter = new TokenStreamRewriter(tokens);
 		ir = new IntermediateRepresentation(this);
@@ -70,18 +74,20 @@ public class Translator extends JjQueryParserBaseListener {
 	@Override
 	public void enterFieldDeclaration(
 			@NotNull JjQueryParser.FieldDeclarationContext ctx) {
-		// save modifiers as Strings to an array
-		ArrayList<String> modifiers = new ArrayList<String>();
-		for (FieldModifierContext fmc : ctx.fieldModifier())
-			modifiers.add(fmc.getText());
+		if (buildingIntermediateRepresentation) {
+			// save modifiers as Strings to an array
+			ArrayList<String> modifiers = new ArrayList<String>();
+			for (FieldModifierContext fmc : ctx.fieldModifier())
+				modifiers.add(fmc.getText());
 
-		// save field type as a String as well
-		String type = ctx.unannType().getText();
+			// save field type as a String as well
+			String type = ctx.unannType().getText();
 
-		// add each field to the intermediate representation
-		VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
-		for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
-			ir.addField(currentClass, modifiers, type, vdc.getText());
+			// add each field to the intermediate representation
+			VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
+			for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
+				ir.addField(currentClass, modifiers, type, vdc.getText());
+		}
 	}
 
 	// save methods to IR
@@ -89,32 +95,38 @@ public class Translator extends JjQueryParserBaseListener {
 	@Override
 	public void enterMethodDeclaration(
 			@NotNull JjQueryParser.MethodDeclarationContext ctx) {
-		// save modifiers as Strings to an array
-		ArrayList<String> modifiers = new ArrayList<String>();
-		for (MethodModifierContext mmc : ctx.methodModifier())
-			modifiers.add(mmc.getText());
+		if (buildingIntermediateRepresentation) {
+			// save modifiers as Strings to an array
+			ArrayList<String> modifiers = new ArrayList<String>();
+			for (MethodModifierContext mmc : ctx.methodModifier())
+				modifiers.add(mmc.getText());
 
-		String result = ctx.methodHeader().result().getText();
+			String result = ctx.methodHeader().result().getText();
 
-		ir.addMethod(currentClass, modifiers, result, ctx.methodHeader()
-				.methodDeclarator().getText());
+			ir.addMethod(currentClass, modifiers, result, ctx.methodHeader()
+					.methodDeclarator().getText());
+		}
 	}
 
 	@Override
 	public void enterLocalVariableDeclaration(
 			@NotNull JjQueryParser.LocalVariableDeclarationContext ctx) {
-		String type = ctx.unannType().getText();
+		if (!buildingIntermediateRepresentation) {
+			String type = ctx.unannType().getText();
 
-		VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
-		for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
-			ir.addLocalVariable(type, vdc.variableDeclaratorId().getText());
+			VariableDeclaratorListContext vdlc = ctx.variableDeclaratorList();
+			for (VariableDeclaratorContext vdc : vdlc.variableDeclarator())
+				ir.addLocalVariable(type, vdc.variableDeclaratorId().getText());
+		}
 	}
 
 	@Override
 	public void exitMethodDeclaration(
 			@NotNull JjQueryParser.MethodDeclarationContext ctx) {
-		Log.info("Clearing local variables intermediate representation");
-		ir.locals.clear();
+		if (!buildingIntermediateRepresentation) {
+			Log.info("Clearing local variables intermediate representation");
+			ir.locals.clear();
+		}
 	}
 
 	//
@@ -123,31 +135,37 @@ public class Translator extends JjQueryParserBaseListener {
 
 	@Override
 	public void enterJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
-		rewriter.replace(ctx.getStart(), "// --- BEGIN --- jQuery block");
+		if (!buildingIntermediateRepresentation) {
+			rewriter.replace(ctx.getStart(), "// --- BEGIN --- jQuery block");
+		}
 	}
 
 	@Override
 	public void exitJQuery(@NotNull JjQueryParser.JQueryContext ctx) {
-		rewriter.replace(ctx.getStop(), "// --- END --- jQuery block");
+		if (!buildingIntermediateRepresentation) {
+			rewriter.replace(ctx.getStop(), "// --- END --- jQuery block");
+		}
 	}
 
 	private String indentation, translation, out, in, fieldOrMethod, value;
 
 	@Override
 	public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
-		initIndentationAndTranslation(ctx);
+		if (!buildingIntermediateRepresentation) {
+			initIndentationAndTranslation(ctx);
 
-		// semantic analysis
-		if (!ctx.OP().getText().equals("="))
-			Log.error("Expecting '=' on assignment, line " + currentLine);
+			// semantic analysis
+			if (!ctx.OP().getText().equals("="))
+				Log.error("Expecting '=' on assignment, line " + currentLine);
 
-		// translation
-		translation += "// " + ctx.getText() + "\n";
+			// translation
+			translation += "// " + ctx.getText() + "\n";
 
-		// initialize variables content
-		out = ctx.ID().getText();
-		ir.assertField(out);
-		ir.assertVisibleField(out);
+			// initialize variables content
+			out = ctx.ID().getText();
+			ir.assertField(out);
+			ir.assertVisibleField(out);
+		}
 	}
 
 	private void initIndentationAndTranslation(JjQueryParser.AssignContext ctx) {
@@ -173,13 +191,15 @@ public class Translator extends JjQueryParserBaseListener {
 	@Override
 	public void enterCollectionFieldSelector(
 			@NotNull JjQueryParser.CollectionFieldSelectorContext ctx) {
-		validateAndRewriteSelector(ctx.ID(), false, ctx.OP().getText());
+		if (!buildingIntermediateRepresentation)
+			validateAndRewriteSelector(ctx.ID(), false, ctx.OP().getText());
 	}
 
 	@Override
 	public void enterCollectionMethodSelector(
 			@NotNull JjQueryParser.CollectionMethodSelectorContext ctx) {
-		validateAndRewriteSelector(ctx.ID(), true, ctx.OP().getText());
+		if (!buildingIntermediateRepresentation)
+			validateAndRewriteSelector(ctx.ID(), true, ctx.OP().getText());
 	}
 
 	private void validateAndRewriteSelector(List<TerminalNode> id,
@@ -278,7 +298,8 @@ public class Translator extends JjQueryParserBaseListener {
 
 	@Override
 	public void exitAssign(@NotNull JjQueryParser.AssignContext ctx) {
-		rewriter.replace(ctx.getStart(), ctx.getStop(), translation);
+		if (!buildingIntermediateRepresentation)
+			rewriter.replace(ctx.getStart(), ctx.getStop(), translation);
 	}
 
 }

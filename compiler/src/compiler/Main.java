@@ -50,6 +50,12 @@ public class Main {
 			// Walk the tree created during the parse, trigger callbacks
 			walker.walk(translator, tree);
 
+			// Toggle translator flag to change next walk behavior
+			translator.buildingIntermediateRepresentation = false;
+
+			// Walk the tree again, this time rewriting jQuery blocks
+			walker.walk(translator, tree);
+
 			// create output folder if it does not exist
 			File file = new File(outputFile);
 			if (file.getParentFile() != null)
