@@ -99,17 +99,49 @@ line 19:13 missing '$' at '('
 
 The semantic analysis is located in both **compiler/src/compiler/Translator.java** and **compiler/src/ir/IntermediateRepresentation.java**.
 
-descrever todas as validações semânticas implementadas (e possíveis construções e consultas de tabelas de símbolos); descrever como lidam com erros semânticos
+The first semantic analysis implemented was to check that the first **OP** token in the **assign** rule was an `=` and not any of the other possible operators explicit in the **OP** token:
+
+```
+@Override
+public void enterAssign(@NotNull JjQueryParser.AssignContext ctx) {
+	(...)
+	
+	if (!ctx.OP().getText().equals("="))
+		Log.error("Expecting '=' on assignment, line " + currentLine);
+	
+	(...)
+}
+```
+
+More advanced semantic analysis that make use of the intermediate representation are being made in **IntermediateRepresentation.java**.  
+That class contains methods to validate whether a variable being used in a selector exists, is visible in the scope where it is being used, and also if the type of variable returned by a selector is the same as the type of the variable to which it is being assigned.  
+These validations are made for local variables, class attributes, and also for methods (yes, the program supports the use of both variables and/or methods in a selector).
+
+The validations described above are only possible by making use of the **intermediate representation**.  
+Whenever the ANTLR **ParseTreeWalker** walks through a field declaration or a method definition, the program saves the modifiers, the type (or return type, for methods), and the name of that field/method. Afterwards, when the jQuery selector is being analysed, the program checks if the fields/methods being used by it have been previously saved, and if they are visible in that scope.  
 
 
 ## Intermediate representation
 
-descrever a(s) representações intermédias utilizadas, e quais as transformações realizadas
+Below are the data structures used by the intermediate representation:
 
+```
+// map(field, field)
+public HashMap<String, Field> fields;
+
+// map(field, method)
+public HashMap<String, Method> methods;
+
+// map(field, local variable)
+public HashMap<String, LocalVariable> locals;
+```
+
+These three collections store the information of the fields, methods, and local variables of the input in order to validate the selectors.  
+The **locals** collection is cleared every time the walker exits a method declaration.
 
 ## Final code generation
 
-Descrever como é feita a geração de código final; identificar potenciais problemas relacionados com a geração de código
+The final output code is built using the **TokenStreamRewriter**. This ANTLR utility rewrites the entire input code as is, except for the tokens we choose to rewrite. The program uses this rewriter to translate the jQuery selectors into Java code.
 
 
 ## Tests
@@ -118,6 +150,8 @@ descrever a infraestrutura de testes e a bateria de testes utilizados para testa
 
 
 ## Architecture
+
+<img src="readme-res/architecture-overview.jpg" width="80%" >
 
 descrever a arquitetura geral da plataforma, principais algoritmos utilizados, e outros pontos que considerem relevantes para a avaliação. No caso particular dos trabalhos #1 (JjQuery) e #5 (JTM), devem documentar bem a linguagem de entrada
 
