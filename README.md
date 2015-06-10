@@ -29,7 +29,7 @@ The second contains the *JjQueryLexer.g4* and *JjQueryParser.g4*, which are the 
 
 #### Example 1
 
-This input is completely valid and generates an output Java file that can be compiled and run.  
+This input is completely **valid** and generates an output Java file that can be compiled and run.  
 The goal of this is example is to demonstrate the resultant output of a very simple input.
 
 Here is the *diff* of the input and output files:
@@ -57,6 +57,39 @@ The translator surrounds the jQuery block with `// --- BEGIN --- jQuery block` a
 It also keeps the original code in a comment, before every translation.
 
 #### Example 2
+
+The goal of this is example is to demonstrate the error thrown when a field being used by a selector does not exist.
+
+```
+Error: 'year' cannot be resolved to a variable (line 36).
+Errors: 1, Warnings: 0
+```
+
+#### Example 3
+
+Field visibility validation.
+
+```
+Error: The field 'title' is not visible (line 36).
+Errors: 1, Warnings: 0
+```
+
+#### Example 4
+
+**Valid** example of a method being used in a selector.  
+The output can be compiled with **no errors** and runs perfectly fine.
+
+#### Example 5
+
+```
+Error: Type mismatch: cannot convert from ArrayList<Book> to ArrayList<String> (line 33)
+Errors: 1, Warnings: 0
+```
+
+#### Example 6
+
+```
+```
 
 
 ## How to use
