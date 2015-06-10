@@ -123,12 +123,25 @@ Whenever the ANTLR **ParseTreeWalker** walks through a field declaration or a me
 
 ## Intermediate representation
 
-descrever a(s) representações intermédias utilizadas, e quais as transformações realizadas
+Below are the data structures used by the intermediate representation:
 
+```
+// map(field, field)
+public HashMap<String, Field> fields;
+
+// map(field, method)
+public HashMap<String, Method> methods;
+
+// map(field, local variable)
+public HashMap<String, LocalVariable> locals;
+```
+
+These three collections store the information of the fields, methods, and local variables of the input in order to validate the selectors.  
+The **locals** collection is cleared every time the walker exits a method declaration.
 
 ## Final code generation
 
-Descrever como é feita a geração de código final; identificar potenciais problemas relacionados com a geração de código
+The final output code is built using the **TokenStreamRewriter**. This ANTLR utility rewrites the entire input code as is, except for the tokens we choose to rewrite. The program uses this rewriter to translate the jQuery selectors into Java code.
 
 
 ## Tests
