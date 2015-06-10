@@ -28,7 +28,33 @@ The second contains the *JjQueryLexer.g4* and *JjQueryParser.g4*, which are the 
 ## Examples
 
 #### Example 1
-para cada exemplo, devem indicar o que o exemplo pretende demonstrar e o resultado esperado
+
+This input is completely valid and generates an output Java file that can be compiled and run.  
+The goal of this is example is to demonstrate the resultant output of a very simple input.
+
+Here is the *diff* of the input and output files:
+
+###### Input
+
+```
+/*@jQ
+selected = $("students[toString()*='ri']");
+*/
+```
+
+###### Output
+
+```
+// --- BEGIN --- jQuery block
+// selected=$("students[toString()*='ri']");
+for (int i = 0; i < students.size(); i++)
+	if (students.get(i).toString().toLowerCase().contains("ri"))
+		selected.add(students.get(i));
+// --- END --- jQuery block
+```
+
+The translator surrounds the jQuery block with `// --- BEGIN --- jQuery block` and `// --- END --- jQuery block` to easily mark the resultant code of the jQuery translation.  
+It also keeps the original code in a comment, before every translation.
 
 #### Example 2
 
