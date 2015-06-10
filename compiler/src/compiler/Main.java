@@ -25,7 +25,7 @@ public class Main {
 		else {
 			inputFile = args[0];
 			outputFile = args[1];
-
+			
 			FileInputStream stream = new FileInputStream(inputFile);
 			ANTLRInputStream input = new ANTLRInputStream(stream);
 

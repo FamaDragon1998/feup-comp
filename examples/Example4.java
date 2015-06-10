@@ -33,7 +33,7 @@ public class Main {
 		ArrayList<Book> selected = new ArrayList<Book>();
 
 		/*@jQ
-		selected = $("library[year*='comp']");
+		selected = $("library[getTitle()*='comp']");
 		*/
 
 		System.out.println("Books in library: ");

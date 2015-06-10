@@ -47,7 +47,7 @@ public class IntermediateRepresentation {
 		if (!fields.containsKey(variable) && !locals.containsKey(variable))
 			Log.error("'" + variable
 					+ "' cannot be resolved to a variable (line "
-					+ translator.currentLine + ").");
+					+ translator.currentLine + ")");
 	}
 
 	public void assertVisibleField(String field) {
@@ -56,13 +56,13 @@ public class IntermediateRepresentation {
 					.equals(translator.currentClass))
 				if (fields.get(field).getModifiers().contains("private"))
 					Log.error("The field '" + field + "' is not visible (line "
-							+ translator.currentLine + ").");
+							+ translator.currentLine + ")");
 	}
 
 	public void assertMethod(String fieldOrMethod) {
 		if (!methods.containsKey(fieldOrMethod))
 			Log.error("The method '" + fieldOrMethod + "' is undefined (line "
-					+ translator.currentLine + ").");
+					+ translator.currentLine + ")");
 	}
 
 	public void assertVisibleMethod(String attribute) {
@@ -70,7 +70,7 @@ public class IntermediateRepresentation {
 			if (methods.get(attribute).getModifiers().contains("private"))
 				Log.error("The method '" + attribute
 						+ "' is not visible (line " + translator.currentLine
-						+ ").");
+						+ ")");
 	}
 
 	public void assertSameType(String out, String in) {
@@ -96,7 +96,7 @@ public class IntermediateRepresentation {
 
 		if (!outType.equals(inType))
 			Log.error("Type mismatch: cannot convert from " + inType + " to "
-					+ outType);
+					+ outType + " (line " + translator.currentLine + ")");
 	}
 
 }
