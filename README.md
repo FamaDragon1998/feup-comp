@@ -174,11 +174,13 @@ Following is an extensive description of the selectors supported by the translat
 
 The program is very flexible regarding the possible methods/attributes that can be used in selectors. It also has a great and extensive validation of those methods/attributes.
 
+
 ## The bad
 
 #### Bugs
 
-When the jQuery selector uses native methods or attributes of an object/primitive, the program thinks they are undefined and triggers an error. Why? Since the user did not write the code for those methods, the walker does not traverse them, and thus does not store those methods in the intermediate representation.
+When the jQuery selector uses native methods or attributes of an object/primitive, the program thinks they are undefined and triggers an error.  
+Why? Since the user did not write the code for those methods, the walker does not traverse them, and thus does not store those methods in the intermediate representation.
 
 ```
 Error: The method 'toString()' is undefined (line 19).
